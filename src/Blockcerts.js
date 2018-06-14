@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Certificate, CertificateVerifier } from 'cert-verifier-js';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
+import Divider from '@material-ui/core/Divider';
 
 const styles = {
   wrapper: {
@@ -70,6 +71,23 @@ class Blockcerts extends Component {
       if (this.state.certificateJson.displayHtml) {
         return (
           <div className={this.props.classes.wrapper}>
+            <Paper className={this.props.classes.certificate} elevation={4}>
+              <button
+                onClick={this.verifyCertificate}
+              >
+                {this.state.verifierResult ? 'Verify again' : 'Verify now'}
+              </button>
+              <p>{this.state.verifierStatus}</p>
+              <Divider />
+              <div dangerouslySetInnerHTML={{__html: this.state.certificateJson.displayHtml.replace(/(<? *script)/gi, 'illegalscript')}} >
+              </div>
+          </Paper>
+          </div>
+        );
+      }
+      else {
+        return (
+          <div className={this.props.classes.wrapper}>
             <button
               onClick={this.verifyCertificate}
             >
@@ -77,26 +95,18 @@ class Blockcerts extends Component {
             </button>
             <p>{this.state.verifierStatus}</p>
             <Paper className={this.props.classes.certificate} elevation={4}>
-              <div dangerouslySetInnerHTML={{__html: this.state.certificateJson.displayHtml.replace(/(<? *script)/gi, 'illegalscript')}} >
-              </div>
-            </Paper>
+              <img src={this.state.certificate.certificateImage} />
+              <h1>{this.state.certificate.title}</h1>
+              <h2>{this.state.certificate.subtitle}</h2>
+              <p className="issuedOn">Awarded on {this.state.certificateJson.issuedOn.toString()}</p>
+              <p className="name">{this.state.certificate.name}</p>
+              <p className="description">{this.state.certificate.description}</p>
+              <img src={this.state.certificate.signatureImage.image} />
+              <p className="jobTitle">{this.state.certificate.signatureImage.jobTitle}</p>
+          </Paper>
           </div>
         );
       }
-      return (
-        <div>
-          <div className="Blockcerts">
-            <img src={this.state.certificate.certificateImage} />
-            <h1>{this.state.certificate.title}</h1>
-            <h2>{this.state.certificate.subtitle}</h2>
-            <p className="issuedOn">Awarded on {this.state.certificateJson.issuedOn.toString()}</p>
-            <p className="name">{this.state.certificate.name}</p>
-            <p className="description">{this.state.certificate.description}</p>
-            <img src={this.state.certificate.signatureImage.image} />
-            <p className="jobTitle">{this.state.certificate.signatureImage.jobTitle}</p>
-          </div>
-        </div>
-      );
     }
     else {
       return(null);
