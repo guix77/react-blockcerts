@@ -1,27 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Certificate, CertificateVerifier } from 'cert-verifier-js';
-import styled from 'styled-components';
+import { withStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
 
-const Certificatewrapper = styled.div`
-  margin: 0 auto;
-  padding: 20px;
-  max-width: 920px;
-  border-radius: 2px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-  &:hover {
-    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-  }
-`
+const styles = {
+  wrapper: {
+    marginTop: 0,
+    marginBottom: 0,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    maxWidth: 992,
+  },
+  certificate: {
+    padding: 20,
+  },
+};
 
-const Verifierwrapper = styled.div`
-  margin: 0 auto;
-  padding: 20px;
-  max-width: 920px;
-`
-
-export default class Blockcerts extends Component {
+class Blockcerts extends Component {
   constructor (props) {
     super (props);
     this.state = {
@@ -31,7 +27,7 @@ export default class Blockcerts extends Component {
       verifierResult: null
     }
     this.verifyCertificate = this.verifyCertificate.bind(this);
-    this.verifierStatusLogger = this.verifierStatusLogger.bind(this);
+    this.verifierLogger = this.verifierLogger.bind(this);
   }
   async componentDidMount() {
     // Fetch certificate.
@@ -54,7 +50,7 @@ export default class Blockcerts extends Component {
     if (this.state.certificateJson) {
       let verifier = new CertificateVerifier(
         JSON.stringify(this.state.certificateJson),
-        this.verifierStatusLogger
+        this.verifierLogger
       );
       verifier
       .verify()
@@ -64,7 +60,7 @@ export default class Blockcerts extends Component {
       .catch(e => console.error(e));
     }
   }
-  verifierStatusLogger(status) {
+  verifierLogger(status) {
     this.setState({
       verifierStatus: status
     });
@@ -73,25 +69,23 @@ export default class Blockcerts extends Component {
     if (this.state.certificateJson && this.state.certificate) {
       if (this.state.certificateJson.displayHtml) {
         return (
-          <div>
-            <Verifierwrapper>
-              <button
-                onClick={this.verifyCertificate}
-              >
-                {this.state.verifierResult ? 'Verify again' : 'Verify'}
-              </button>
-              <p>{this.state.verifierStatus}</p>
-            </Verifierwrapper>
-            <Certificatewrapper className="Blockcerts">
+          <div className={this.props.classes.wrapper}>
+            <button
+              onClick={this.verifyCertificate}
+            >
+              {this.state.verifierResult ? 'Verify again' : 'Verify now'}
+            </button>
+            <p>{this.state.verifierStatus}</p>
+            <Paper className={this.props.classes.certificate} elevation={4}>
               <div dangerouslySetInnerHTML={{__html: this.state.certificateJson.displayHtml.replace(/(<? *script)/gi, 'illegalscript')}} >
               </div>
-            </Certificatewrapper>
+            </Paper>
           </div>
         );
       }
       return (
         <div>
-          <Certificatewrapper className="Blockcerts">
+          <div className="Blockcerts">
             <img src={this.state.certificate.certificateImage} />
             <h1>{this.state.certificate.title}</h1>
             <h2>{this.state.certificate.subtitle}</h2>
@@ -100,7 +94,7 @@ export default class Blockcerts extends Component {
             <p className="description">{this.state.certificate.description}</p>
             <img src={this.state.certificate.signatureImage.image} />
             <p className="jobTitle">{this.state.certificate.signatureImage.jobTitle}</p>
-          </Certificatewrapper>
+          </div>
         </div>
       );
     }
@@ -113,3 +107,5 @@ export default class Blockcerts extends Component {
 Blockcerts.propTypes = {
   url: PropTypes.string.isRequired
 }
+
+export default withStyles(styles)(Blockcerts);
