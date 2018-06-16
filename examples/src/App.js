@@ -9,7 +9,7 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">react-blockcerts examples</h1>
           <ul>
-            <li><a href="https://github.com/guix77/react-blockcerts" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+            <li><a href="https://github.com/guix77/react-blockcerts">GitHub</a></li>
             <li><a href="https://www.blockcerts.org/" target="_blank" rel="noopener noreferrer">BlockCerts.org</a></li>
             <li>Sponsored by <a href="https://ico.talao.io/" target="_blank" rel="noopener noreferrer">Talao.io</a></li>
           </ul>
