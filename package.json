@@ -2,19 +2,12 @@
   "name": "react-blockcerts",
   "version": "0.1.0",
   "description": "React component to display and verify a BlockCerts certificate.",
-  "main": "build/index.js",
-  "peerDependencies": {
-    "@material-ui/core": "^1.2.1",
-    "@material-ui/icons": "^1.1.0",
-    "cert-verifier-js": "^1.0.0",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1"
-  },
-  "dependencies": {},
+  "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack --watch",
-    "build": "webpack -p"
+    "start": "webpack-dev-server --mode development",
+    "transpile": "babel src -d dist --copy-files",
+    "prepublishOnly": "yarn run transpile"
   },
   "repository": "https://github.com/guix77/react-blockcerts.git",
   "author": "Guillaume Duveau <guillaume.duveau@gmail.com>",
@@ -25,14 +18,23 @@
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-plugin-transform-react-jsx": "^6.24.1",
     "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
     "cert-verifier-js": "^1.0.0",
+    "css-loader": "^0.28.11",
+    "html-webpack-plugin": "^3.2.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
+    "style-loader": "^0.21.0",
     "webpack": "^4.12.0",
-    "webpack-bundle-analyzer": "^2.13.1",
-    "webpack-cli": "^3.0.6"
+    "webpack-cli": "^3.0.6",
+    "webpack-dev-server": "^3.1.4"
+  },
+  "peerDependencies": {
+    "@material-ui/core": "^1.2.1",
+    "@material-ui/icons": "^1.1.0",
+    "cert-verifier-js": "^1.0.0",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1"
   }
 }
