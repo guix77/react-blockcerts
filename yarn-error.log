@@ -1,5 +1,5 @@
 Arguments: 
-  /home/guix/.nvm/versions/node/v10.1.0/bin/node /usr/share/yarn/bin/yarn.js add @materia-ui/icons
+  /home/guix/.nvm/versions/node/v10.1.0/bin/node /usr/share/yarn/bin/yarn.js add @material-ui/cions --dev
 
 PATH: 
   /home/guix/.yarn/bin:/home/guix/.nvm/versions/node/v10.1.0/bin:/home/guix/bin:/home/guix/.nix-profile/bin:/home/guix/.nix-profile/sbin:/home/guix/bin:/home/guix/bin/appimage:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/guix/Android/Sdk/tools:/home/guix/Android/Sdk/platform-tools:/usr/lib/jvm/java-8-openjdk-amd64
@@ -14,7 +14,7 @@ Platform:
   linux x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@materia-ui%2ficons: Not found
+  Error: https://registry.yarnpkg.com/@material-ui%2fcions: Not found
       at Request.params.callback [as _callback] (/usr/share/yarn/lib/cli.js:65656:18)
       at Request.self.callback (/usr/share/yarn/lib/cli.js:134675:22)
       at Request.emit (events.js:182:13)
@@ -33,13 +33,12 @@ npm manifest:
     "description": "React component to display and verify a BlockCerts certificate.",
     "main": "build/index.js",
     "peerDependencies": {
+      "@material-ui/core": "^1.2.1",
       "react": "^16.4.1",
       "react-dom": "^16.4.1"
     },
     "dependencies": {
-      "@material-ui/core": "^1.2.1",
       "cert-verifier-js": "^1.0.0",
-      "styled-components": "^3.3.2",
       "webpack": "^4.12.0"
     },
     "scripts": {
@@ -51,6 +50,7 @@ npm manifest:
     "author": "Guillaume Duveau <guillaume.duveau@gmail.com>",
     "license": "MIT",
     "devDependencies": {
+      "@material-ui/core": "^1.2.1",
       "babel-cli": "^6.26.0",
       "babel-core": "^6.26.3",
       "babel-loader": "^7.1.4",
@@ -1192,7 +1192,7 @@ Lockfile:
       ieee754 "^1.1.4"
       isarray "^1.0.0"
   
-  buffer@^5.0.3, buffer@^5.1.0:
+  buffer@^5.1.0:
     version "5.1.0"
     resolved "https://registry.yarnpkg.com/buffer/-/buffer-5.1.0.tgz#c913e43678c7cb7c8bd16afbcddb6c5505e8f9fe"
     dependencies:
@@ -1563,18 +1563,6 @@ Lockfile:
       randombytes "^2.0.0"
       randomfill "^1.0.3"
   
-  css-color-keywords@^1.0.0:
-    version "1.0.0"
-    resolved "https://registry.yarnpkg.com/css-color-keywords/-/css-color-keywords-1.0.0.tgz#fea2616dc676b2962686b3af8dbdbe180b244e05"
-  
-  css-to-react-native@^2.0.3:
-    version "2.2.0"
-    resolved "https://registry.yarnpkg.com/css-to-react-native/-/css-to-react-native-2.2.0.tgz#d524ef7f39a2747a8914e86563669ba35b7cf2e7"
-    dependencies:
-      css-color-keywords "^1.0.0"
-      fbjs "^0.8.5"
-      postcss-value-parser "^3.3.0"
-  
   css-vendor@^0.3.8:
     version "0.3.8"
     resolved "https://registry.yarnpkg.com/css-vendor/-/css-vendor-0.3.8.tgz#6421cfd3034ce664fe7673972fd0119fc28941fa"
@@ -1925,7 +1913,7 @@ Lockfile:
     version "2.0.0"
     resolved "https://registry.yarnpkg.com/fast-json-stable-stringify/-/fast-json-stable-stringify-2.0.0.tgz#d5142c0caee6b1189f87d3a76111064f86c8bbf2"
   
-  fbjs@^0.8.1, fbjs@^0.8.16, fbjs@^0.8.5:
+  fbjs@^0.8.1, fbjs@^0.8.16:
     version "0.8.17"
     resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.17.tgz#c4d598ead6949112653d6588b01a5cdcd9f90fdd"
     dependencies:
@@ -3359,10 +3347,6 @@ Lockfile:
     version "0.1.1"
     resolved "https://registry.yarnpkg.com/posix-character-classes/-/posix-character-classes-0.1.1.tgz#01eac0fe3b5af71a2a6c02feabb8c1fef7e00eab"
   
-  postcss-value-parser@^3.3.0:
-    version "3.3.0"
-    resolved "https://registry.yarnpkg.com/postcss-value-parser/-/postcss-value-parser-3.3.0.tgz#87f38f9f18f774a4ab4c8a232f5c5ce8872a9d15"
-  
   preserve@^0.2.0:
     version "0.2.0"
     resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
@@ -3393,7 +3377,7 @@ Lockfile:
     dependencies:
       asap "~2.0.3"
   
-  prop-types@^15.5.4, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1:
+  prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1:
     version "15.6.1"
     resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.1.tgz#36644453564255ddda391191fb3a125cbdf654ca"
     dependencies:
@@ -3504,16 +3488,12 @@ Lockfile:
       prop-types "^15.6.0"
   
   react-event-listener@^0.6.0:
-    version "0.6.0"
-    resolved "https://registry.yarnpkg.com/react-event-listener/-/react-event-listener-0.6.0.tgz#f8cf2821f5ca1844e0df1dac1c7b9a3ecb686fd7"
+    version "0.6.1"
+    resolved "https://registry.yarnpkg.com/react-event-listener/-/react-event-listener-0.6.1.tgz#41c7a80a66b398c27dd511e22712b02f3d4eccca"
     dependencies:
       "@babel/runtime" "^7.0.0-beta.42"
       prop-types "^15.6.0"
-      warning "^3.0.0"
-  
-  react-is@^16.3.1:
-    version "16.4.1"
-    resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.4.1.tgz#d624c4650d2c65dbd52c72622bbf389435d9776e"
+      warning "^4.0.1"
   
   react-jss@^8.1.0:
     version "8.5.1"
@@ -4016,29 +3996,6 @@ Lockfile:
     version "2.0.1"
     resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
   
-  styled-components@^3.3.2:
-    version "3.3.2"
-    resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-3.3.2.tgz#087b96830ee3d60d9a8b5ef17c132b4f29cc71df"
-    dependencies:
-      buffer "^5.0.3"
-      css-to-react-native "^2.0.3"
-      fbjs "^0.8.16"
-      hoist-non-react-statics "^2.5.0"
-      is-plain-object "^2.0.1"
-      prop-types "^15.5.4"
-      react-is "^16.3.1"
-      stylis "^3.5.0"
-      stylis-rule-sheet "^0.0.10"
-      supports-color "^3.2.3"
-  
-  stylis-rule-sheet@^0.0.10:
-    version "0.0.10"
-    resolved "https://registry.yarnpkg.com/stylis-rule-sheet/-/stylis-rule-sheet-0.0.10.tgz#44e64a2b076643f4b52e5ff71efc04d8c3c4a430"
-  
-  stylis@^3.5.0:
-    version "3.5.0"
-    resolved "https://registry.yarnpkg.com/stylis/-/stylis-3.5.0.tgz#016fa239663d77f868fef5b67cf201c4b7c701e1"
-  
   supports-color@3.1.2:
     version "3.1.2"
     resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-3.1.2.tgz#72a262894d9d408b956ca05ff37b2ed8a6e2a2d5"
@@ -4048,12 +4005,6 @@ Lockfile:
   supports-color@^2.0.0:
     version "2.0.0"
     resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-2.0.0.tgz#535d045ce6b6363fa40117084629995e9df324c7"
-  
-  supports-color@^3.2.3:
-    version "3.2.3"
-    resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-3.2.3.tgz#65ac0504b3954171d8a64946b2ae3cbb8a5f54f6"
-    dependencies:
-      has-flag "^1.0.0"
   
   supports-color@^5.3.0, supports-color@^5.4.0:
     version "5.4.0"
