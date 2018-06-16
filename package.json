@@ -7,7 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --mode development",
     "transpile": "babel src -d dist --copy-files",
-    "prepublishOnly": "yarn run transpile"
+    "prepublishOnly": "yarn run transpile",
+    "build": "webpack --mode production",
+    "deploy": "gh-pages -d examples/dist",
+    "publish-demo": "yarn run build && yarn run deploy"
   },
   "repository": "https://github.com/guix77/react-blockcerts.git",
   "author": "Guillaume Duveau <guillaume.duveau@gmail.com>",
@@ -22,6 +25,7 @@
     "babel-preset-react": "^6.24.1",
     "cert-verifier-js": "^1.0.0",
     "css-loader": "^0.28.11",
+    "gh-pages": "^1.2.0",
     "html-webpack-plugin": "^3.2.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
