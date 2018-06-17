@@ -197,15 +197,15 @@ class Blockcerts extends Component {
                 centered
               >
                 <Tab
-                  label="Custom display"
+                  label="Custom"
                   icon={<SchoolIcon />}
                 />
                 <Tab
-                  label="Standard display"
+                  label="Standard"
                   icon={<SchoolIcon />}
                 />
                 <Tab
-                  label={'Certificate verification'}
+                  label={'Verification'}
                   icon={this.state.verifierResult == 'success' ? <CheckCircleIcon /> : <HighlightOffIcon />}
                 />
               </Tabs>
