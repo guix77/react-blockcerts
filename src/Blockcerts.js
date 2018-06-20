@@ -72,60 +72,68 @@ TabContainer.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-function getSteps() {
-  return [
-    'Parsing issuer keys',
-    'Comparing hashes',
-    'Checking Merkle root',
-    'Checking receipt',
-    'Checking revoked status',
-    'Checking authenticity',
-    'Checking expiration date',
-    'Success'
-  ];
-}
-
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return 'TODO: explain that step.';
-    case 1:
-      return 'TODO: explain that step.';
-    case 2:
-      return 'TODO: explain that step.';
-    case 3:
-      return 'TODO: explain that step.';
-    case 4:
-      return 'TODO: explain that step.';
-    case 5:
-      return 'TODO: explain that step.';
-    case 6:
-      return 'TODO: explain that step.';
-    case 7:
-      return 'TODO: explain that step.';
-  }
-}
-
-function setStep(status) {
-  switch (status) {
-    case 'parsingIssuerKeys':
-      return 0;
-    case 'comparingHashes':
-      return 1;
-    case 'checkingMerkleRoot':
-      return 2;
-    case 'checkingReceipt':
-      return 3;
-    case 'checkingRevokedStatus':
-      return 4;
-    case 'checkingAuthenticity':
-      return 5;
-    case 'checkingExpiresDate':
-      return 6;
-    case 'success':
-      return 7;
-  }
-}
+const verifierSteps = [
+  {
+    status: 'computingLocalHash',
+    name: 'Computing local hash',
+    description: 'TODO: explain that step',
+  },
+  {
+    status: 'fetchingRemoteHash',
+    name: 'Fetching remote hash',
+    description: 'TODO: explain that step',
+  },
+  {
+    status: 'gettingIssuerProfile',
+    name: 'Getting issuer profile',
+    description: 'TODO: explain that step',
+  },
+  {
+    status: 'parsingIssuerKeys',
+    name: 'Parsing issuer keys',
+    description: 'TODO: explain that step',
+  },
+  {
+    status: 'comparingHashes',
+    name: 'Comparing hashes',
+    description: 'TODO: explain that step',
+  },
+  {
+    status: 'checkingMerkleRoot',
+    name: 'Checking Merkle root',
+    description: 'TODO: explain that step',
+  },
+  {
+    status: 'checkingReceipt',
+    name: 'Checking receipt',
+    description: 'TODO: explain that step',
+  },
+  {
+    status: 'checkingIssuerSignature',
+    name: 'Checking issuer signature',
+    description: 'TODO: explain that step',
+  },
+  {
+    status: 'checkingAuthenticity',
+    name: 'Checking authenticity',
+    description: 'TODO: explain that step',
+  },
+  {
+    status: 'checkingRevokedStatus',
+    name: 'Checking revoked status',
+    description: 'TODO: explain that step',
+  },
+  {
+    status: 'checkingExpiresDate',
+    name: 'Checking expires date',
+    description: 'TODO: explain that step',
+  },
+  {
+    status: 'success',
+    name: 'Success: this certificate is valid',
+    description: 'TODO: explain that step',
+  },
+];
 
 class Blockcerts extends Component {
   constructor (props) {
@@ -135,7 +143,7 @@ class Blockcerts extends Component {
       certificateJson: null,
       certificate: null,
       verifierStep: 0,
-      verifierStatus: null,
+      verifierFailureStep: null,
       verifierResult: null
     }
     this.tabChange = this.tabChange.bind(this);
@@ -177,11 +185,16 @@ class Blockcerts extends Component {
     }
   }
   verifierStepper(status) {
-    let step = setStep(status);
-    this.setState({
-      verifierStep: step,
-      verifierStatus: status
-    });
+    if (status !== 'failure') {
+      let step = Object.keys(verifierSteps).find(key => verifierSteps[key].status === status);
+      this.setState({verifierStep: step});
+    }
+    else {
+      this.setState({
+        verifierFailureStep: this.state.verifierStep,
+        verifierResult: 'failure'
+      });
+    }
   }
   verifierNext() {
     this.setState({verifierStep: this.state.verifierStep + 1});
@@ -192,8 +205,8 @@ class Blockcerts extends Component {
   render() {
     if (this.state.certificateJson && this.state.certificate) {
       const { tab } = this.state;
-      const steps = getSteps();
       const { verifierStep } = this.state;
+      const { verifierFailureStep } = this.state;
       return (
         <div className={this.props.classes.wrapper}>
           <Paper className={this.props.classes.paper} elevation={4}>
@@ -277,14 +290,14 @@ class Blockcerts extends Component {
               </div>
               <div className={this.props.classes.stepper}>
                 <Stepper
-                  activeStep={verifierStep}
+                  activeStep={parseInt(verifierStep)}
                   orientation="vertical">
-                  {steps.map((label, index) => {
+                  {verifierSteps.map((step, index) => {
                     return (
-                      <Step key={label}>
-                        <StepLabel>{label}</StepLabel>
+                      <Step key={index}>
+                        <StepLabel>{step.name}</StepLabel>
                         <StepContent>
-                          <Typography>{getStepContent(index)}</Typography>
+                          <Typography>{step.description}</Typography>
                           <div className={this.props.classes.stepButtons}>
                             {verifierStep > 0 && <Button
                               size="small"
@@ -294,7 +307,7 @@ class Blockcerts extends Component {
                             >
                               Back
                             </Button>}
-                            {verifierStep < steps.length - 1 && <Button
+                            {(verifierStep < verifierSteps.length - 1 && (!verifierFailureStep || verifierStep < verifierFailureStep)) && <Button
                               size="small"
                               color="secondary"
                               className={this.props.classes.stepButton}

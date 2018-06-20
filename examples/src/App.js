@@ -44,7 +44,7 @@ class App extends Component {
           </article>
           <article className="App-section">
             <header>
-              <h2>BlockCerts v2.0, standard display, expired, signed on Bitcoin testnet</h2>
+              <h2>BlockCerts v2.0, standard display, invalid (wrong issuer keys), signed on Bitcoin testnet</h2>
               <p>https://raw.githubusercontent.com/blockchain-certificates/cert-verifier-js/master/tests/data/sample_cert-expired-2.0.json</p>
             </header>
             <Blockcerts
