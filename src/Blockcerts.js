@@ -76,62 +76,52 @@ const verifierSteps = [
   {
     status: 'computingLocalHash',
     name: 'Computing local hash',
-    description: 'TODO: explain that step',
+    description: 'Compute locally the hash of this certificate.',
   },
   {
     status: 'fetchingRemoteHash',
     name: 'Fetching remote hash',
-    description: 'TODO: explain that step',
-  },
-  {
-    status: 'gettingIssuerProfile',
-    name: 'Getting issuer profile',
-    description: 'TODO: explain that step',
+    description: 'Get the certificate hash stored in the blockchain transaction.',
   },
   {
     status: 'parsingIssuerKeys',
     name: 'Parsing issuer keys',
-    description: 'TODO: explain that step',
+    description: 'Get the issuer blockchain public keys (actual and revoked).',
   },
   {
     status: 'comparingHashes',
     name: 'Comparing hashes',
-    description: 'TODO: explain that step',
+    description: 'Compare the locally computed hash of this certificate VS the hash stored in the blockchain.',
   },
   {
     status: 'checkingMerkleRoot',
     name: 'Checking Merkle root',
-    description: 'TODO: explain that step',
+    description: 'Validate the Merkle proof stored inside of the certificate.',
   },
   {
     status: 'checkingReceipt',
     name: 'Checking receipt',
-    description: 'TODO: explain that step',
-  },
-  {
-    status: 'checkingIssuerSignature',
-    name: 'Checking issuer signature',
-    description: 'TODO: explain that step',
-  },
-  {
-    status: 'checkingAuthenticity',
-    name: 'Checking authenticity',
-    description: 'TODO: explain that step',
+    description: 'Compare the Merkle root value in the certificate with the value in the blockchain transaction.',
   },
   {
     status: 'checkingRevokedStatus',
     name: 'Checking revoked status',
-    description: 'TODO: explain that step',
+    description: 'Check that this certificate has not been revoked by the issuer.',
+  },
+  {
+    status: 'checkingAuthenticity',
+    name: 'Checking authenticity',
+    description: 'Check that the certificate was authored by the issuer.',
   },
   {
     status: 'checkingExpiresDate',
     name: 'Checking expires date',
-    description: 'TODO: explain that step',
+    description: 'Check that the certificate is not expired.',
   },
   {
     status: 'success',
-    name: 'Success: this certificate is valid',
-    description: 'TODO: explain that step',
+    name: 'Valid certificate',
+    description: 'Success: this certificate is valid!',
   },
 ];
 
