@@ -28,8 +28,28 @@ Then
       }
     }
 
-## Props
+### Props
 
-### url
+#### url
 
 The url of a certificate JSON.
+
+## Development
+
+*You do not need this if you are just using react-blockcerts.*
+
+Watch files and run a development server on http://localhost:3000/
+
+    yarn start
+
+Transpile to publish the NPM package:
+
+    yarn transpile
+
+Publish NPM package:
+
+    npm publish
+
+Publish demo:
+
+    yarn publish-demo

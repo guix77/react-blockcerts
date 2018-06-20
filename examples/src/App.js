@@ -17,26 +17,7 @@ class App extends Component {
         <div className="App-content">
           <article className="App-section">
             <header>
-              <h2>2.0, Bitcoin Mainnet, Valid, with displayHtml certificate property</h2>
-              <p>https://raw.githubusercontent.com/blockchain-certificates/cert-verifier-js/master/tests/data/sample-cert-mainnet-valid-2.0.json</p>
-            </header>
-            <Blockcerts
-              url="https://raw.githubusercontent.com/blockchain-certificates/cert-verifier-js/master/tests/data/sample-cert-mainnet-valid-2.0.json"
-            />
-          </article>
-          <article className="App-section">
-            <header>
-              <h2>2.0, Ethereum Mainnet, Valid, with displayHtml certificate property</h2>
-              <p>https://raw.githubusercontent.com/blockchain-certificates/cert-verifier-js/master/tests/data/sample_ethereum_cert-mainnet-valid-2.0.json</p>
-            </header>
-            <Blockcerts
-              url="https://raw.githubusercontent.com/blockchain-certificates/cert-verifier-js/master/tests/data/sample_ethereum_cert-mainnet-valid-2.0.json"
-            />
-            <p><em>I swear I have nothing to do with this image!</em></p>
-          </article>
-          <article className="App-section">
-            <header>
-              <h2>2.0, Bitcoin, Valid, without displayHtml: content computed from multiple certificate properties</h2>
+              <h2>BlockCerts v2.0, standard display, valid, signed on Bitcoin testnet</h2>
               <p>https://raw.githubusercontent.com/blockchain-certificates/cert-verifier-js/master/tests/data/sample_cert-valid-2.0.json</p>
             </header>
             <Blockcerts
@@ -45,7 +26,25 @@ class App extends Component {
           </article>
           <article className="App-section">
             <header>
-              <h2>2.0, Bitcoin, Expired, without displayHtml: content computed from multiple certificate properties</h2>
+              <h2>BlockCerts v2.0, standard display, valid, signed on Ethereum testnet</h2>
+              <p>https://raw.githubusercontent.com/blockchain-certificates/cert-verifier-js/master/tests/data/sample_ethereum_cert-valid-2.0.json</p>
+            </header>
+            <Blockcerts
+              url="https://raw.githubusercontent.com/blockchain-certificates/cert-verifier-js/master/tests/data/sample_ethereum_cert-valid-2.0.json"
+            />
+          </article>
+          <article className="App-section">
+            <header>
+              <h2>BlockCerts v2.0, custom display, valid, signed on Bitcoin mainnet</h2>
+              <p>https://raw.githubusercontent.com/blockchain-certificates/cert-verifier-js/master/tests/data/sample-cert-mainnet-valid-2.0.json</p>
+            </header>
+            <Blockcerts
+              url="https://raw.githubusercontent.com/blockchain-certificates/cert-verifier-js/master/tests/data/sample-cert-mainnet-valid-2.0.json"
+            />
+          </article>
+          <article className="App-section">
+            <header>
+              <h2>BlockCerts v2.0, standard display, expired, signed on Bitcoin testnet</h2>
               <p>https://raw.githubusercontent.com/blockchain-certificates/cert-verifier-js/master/tests/data/sample_cert-expired-2.0.json</p>
             </header>
             <Blockcerts

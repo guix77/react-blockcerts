@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import SchoolIcon from '@material-ui/icons/School';
+import Timestamp from 'react-timestamp';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
@@ -31,8 +32,16 @@ const styles = {
     paddingTop: 20,
     backgroundColor: '#02112a',
   },
+  tabs: {
+    marginTop: 20,
+  },
   tab: {
     padding: 20,
+  },
+  image: {
+    maxWidth: '100%',
+    height: 'auto',
+    marginBottom: 20,
   },
   stepper: {
     textAlign: 'left',
@@ -46,8 +55,8 @@ const styles = {
   verifierResult: {
     textAlign: 'center',
   },
-  verifierReset:{
-    marginTop: 20,
+  verifierButton: {
+    margin: 20,
   },
 };
 
@@ -191,6 +200,7 @@ class Blockcerts extends Component {
             <div className={this.props.classes.header}>
               <BlockcertsLogo />
               <Tabs
+                className={this.props.classes.tabs}
                 value={tab}
                 onChange={this.tabChange}
                 indicatorColor='primary'
@@ -220,16 +230,51 @@ class Blockcerts extends Component {
               </div>
             </TabContainer>}
             {tab === 1 && <TabContainer>
-              <img src={this.state.certificate.certificateImage} />
-              <Typography variant="title" component="h1">{this.state.certificate.title}</Typography>
-              <Typography variant="subheading" component="h2">{this.state.certificate.subtitle}</Typography>
-              <Typography component="p">Awarded on {this.state.certificateJson.issuedOn.toString()} to:</Typography>
-              <Typography variant="title" component="h2">{this.state.certificate.name}</Typography>
-              <Typography component="p">{this.state.certificate.description}</Typography>
-              <img src={this.state.certificate.signatureImage.image} />
-              <Typography component="p">{this.state.certificate.signatureImage.jobTitle}</Typography>
+              <img src={this.state.certificate.certificateImage} className={this.props.classes.image} />
+              <Typography paragraph variant="headline" component="h1">
+                {this.state.certificate.title}
+              </Typography>
+              <Typography paragraph variant="subheading" component="h2">
+                {this.state.certificate.subtitle}
+              </Typography>
+              <Typography paragraph variant="caption" component="p">
+                Awarded on <Timestamp time={this.state.certificateJson.issuedOn.toString()} format="full" /> to
+              </Typography>
+              <Typography paragraph variant="title" component="h2">
+                {this.state.certificate.name}
+              </Typography>
+              <Typography paragraph component="p">
+                {this.state.certificate.description}
+              </Typography>
+              <Typography paragraph variant="caption" component="p">
+                Issued by
+              </Typography>
+              <img src={this.state.certificate.sealImage} className={this.props.classes.image} />
+              <Typography paragraph variant="title" component="h2">
+                {this.state.certificate.issuer.name}
+              </Typography>
+              <Typography paragraph component="p">
+                {this.state.certificate.issuer.description}
+              </Typography>
+              <Typography paragraph component="p">
+                {this.state.certificate.issuer.email}
+              </Typography>
             </TabContainer>}
             {tab === 2 && <TabContainer>
+              <div className={this.props.classes.verifierResult}>
+                <Typography variant="headline" component="h3">
+                  {this.state.verifierResult === 'success' ? 'Valid certificate': 'Invalid certificate'}
+                </Typography>
+                <Typography component="p">
+                  {this.state.verifierResult === 'success' ? 'All the verification steps succedded. This certificate is valid!': 'Some verification steps did not succeed. This certificate is NOT valid.'}
+                </Typography>
+                <Button className={this.props.classes.verifierButton} variant="contained" color="primary" href={this.state.certificate.transactionLink}>
+                  See blockchain transaction
+                </Button>
+                <Button className={this.props.classes.verifierButton} variant="contained" color="primary" onClick={this.verifyCertificate}>
+                  Verify again
+                </Button>
+              </div>
               <div className={this.props.classes.stepper}>
                 <Stepper
                   activeStep={verifierStep}
@@ -263,22 +308,6 @@ class Blockcerts extends Component {
                     );
                   })}
                 </Stepper>
-              </div>
-              <div className={this.props.classes.verifierResult}>
-                <Typography variant="headline" component="h3">
-                  {this.state.verifierResult === 'success' ? 'Valid certificate': 'Invalid certificate'}
-                </Typography>
-                <Typography component="p">
-                  {this.state.verifierResult === 'success' ? 'All the verification steps succedded. This certificate is valid!': 'Some verification steps did not succeed. This certificate is NOT valid.'}
-                </Typography>
-                <Button
-                  className={this.props.classes.verifierReset}
-                  variant="contained"
-                  color="primary"
-                  onClick={this.verifyCertificate}
-                >
-                  Verify again
-                </Button>
               </div>
             </TabContainer>}
         </Paper>
