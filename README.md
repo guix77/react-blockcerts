@@ -42,10 +42,6 @@ Watch files and run a development server on http://localhost:3000/
 
     yarn start
 
-Transpile to publish the NPM package:
-
-    yarn transpile
-
 Publish NPM package:
 
     npm publish
