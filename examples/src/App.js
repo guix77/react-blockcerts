@@ -17,20 +17,20 @@ class App extends Component {
         <div className="App-content">
           <article className="App-section">
             <header>
+              <h2>BlockCerts v2.0, standard display, valid, signed on Ethereum testnet</h2>
+              <p>https://raw.githubusercontent.com/guix77/blockcerts-certificates/master/certificates/ropsten/talao/guillaumeduveau-react-blockcerts.json</p>
+            </header>
+            <Blockcerts
+              url="https://raw.githubusercontent.com/guix77/blockcerts-certificates/master/certificates/ropsten/talao/guillaumeduveau-react-blockcerts.json"
+            />
+          </article>
+          <article className="App-section">
+            <header>
               <h2>BlockCerts v2.0, standard display, valid, signed on Bitcoin testnet</h2>
               <p>https://raw.githubusercontent.com/blockchain-certificates/cert-verifier-js/master/tests/data/sample_cert-valid-2.0.json</p>
             </header>
             <Blockcerts
               url="https://raw.githubusercontent.com/blockchain-certificates/cert-verifier-js/master/tests/data/sample_cert-valid-2.0.json"
-            />
-          </article>
-          <article className="App-section">
-            <header>
-              <h2>BlockCerts v2.0, standard display, valid, signed on Ethereum testnet</h2>
-              <p>https://raw.githubusercontent.com/blockchain-certificates/cert-verifier-js/master/tests/data/sample_ethereum_cert-valid-2.0.json</p>
-            </header>
-            <Blockcerts
-              url="https://raw.githubusercontent.com/blockchain-certificates/cert-verifier-js/master/tests/data/sample_ethereum_cert-valid-2.0.json"
             />
           </article>
           <article className="App-section">
