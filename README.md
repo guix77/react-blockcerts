@@ -28,11 +28,21 @@ Then
       }
     }
 
-### Props
+There's also a preview component for unsigned certificates and injected data with a JSON object:
 
-#### url
+    import React, { Component } from 'react';
+    import { BlockcertsPreview } from 'react-blockcerts';
+    export defaut MyComponent extends Component {
+      render() {
+        return(
+          <BlockcertsPreview
+            json={}
+          />
+        );
+      }
+    }
 
-The url of a certificate JSON.
+Look at examples/src/App.js for a JSON example, basically it's what Cert-issuer generates.
 
 ## Development
 
