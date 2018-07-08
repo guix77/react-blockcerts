@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Certificate } from 'cert-verifier-js';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import BlockcertsLogo from './BlockcertsLogo';
@@ -54,10 +53,8 @@ TabContainer.propTypes = {
 class BlockcertsPreview extends Component {
   constructor (props) {
     super (props);
-    let certificate = Certificate.parseJson(this.props.json);
     this.state = {
-      certificate: certificate,
-      tab: certificate.displayHtml ? 0 : 1
+      tab: this.props.displayHtml ? 0 : 1
     }
     this.tabChange = this.tabChange.bind(this);
   }
@@ -65,6 +62,7 @@ class BlockcertsPreview extends Component {
     this.setState({tab: value});
   }
   render() {
+    console.log(this.props.json)
     const { tab } = this.state;
     return (
       <div className={this.props.classes.wrapper}>
@@ -90,42 +88,39 @@ class BlockcertsPreview extends Component {
           </div>
           {tab === 0 && <TabContainer>
             <div className={this.props.classes.tab}>
-              {this.state.certificateJson.displayHtml && <div dangerouslySetInnerHTML={{__html: this.state.certificateJson.displayHtml.replace(/(<? *script)/gi, 'illegalscript')}} >
+              {this.props.json.displayHtml && <div dangerouslySetInnerHTML={{__html: this.props.json.displayHtml.replace(/(<? *script)/gi, 'illegalscript')}} >
               </div>}
-              {!this.state.certificateJson.displayHtml && <div>
+              {!this.props.json.displayHtml && <div>
                 The certificate has no custom display, please view the standard display.
               </div>}
             </div>
           </TabContainer>}
           {tab === 1 && <TabContainer>
-            <img src={this.state.certificate.certificateImage} className={this.props.classes.image} />
+            <img src={this.props.json.badge.image} className={this.props.classes.image} />
             <Typography paragraph variant="headline" component="h1">
-              {this.state.certificate.title}
+              {this.props.json.title}
             </Typography>
             <Typography paragraph variant="subheading" component="h2">
-              {this.state.certificate.subtitle}
+              {this.props.json.badge.name}
             </Typography>
             <Typography paragraph variant="caption" component="p">
-              Awarded on <Timestamp time={this.state.certificateJson.issuedOn.toString()} format="full" /> to
+              Awarded on <Timestamp time={this.props.json.issuedOn.toString()} format="full" /> to
             </Typography>
             <Typography paragraph variant="title" component="h2">
-              {this.state.certificate.name}
+              {this.props.json.recipientProfile.name}
             </Typography>
-            <Typography paragraph component="p">
-              {this.state.certificate.description}
-            </Typography>
+            {/* <Typography paragraph component="p">
+              {this.props.json.description}
+            </Typography> */}
             <Typography paragraph variant="caption" component="p">
               Issued by
             </Typography>
-            <img src={this.state.certificate.sealImage} className={this.props.classes.image} />
+            <img src={this.props.json.badge.issuer.image} className={this.props.classes.image} />
             <Typography paragraph variant="title" component="h2">
-              {this.state.certificate.issuer.name}
+              {this.props.json.badge.issuer.name}
             </Typography>
             <Typography paragraph component="p">
-              {this.state.certificate.issuer.description}
-            </Typography>
-            <Typography paragraph component="p">
-              {this.state.certificate.issuer.email}
+              {this.props.json.badge.issuer.email}
             </Typography>
           </TabContainer>}
       </Paper>
