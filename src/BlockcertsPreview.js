@@ -3,10 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import BlockcertsLogo from './BlockcertsLogo';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
-import SchoolIcon from '@material-ui/icons/School';
 import Timestamp from 'react-timestamp';
 import Button from '@material-ui/core/Button';
 
@@ -24,12 +21,7 @@ const styles = {
     color: 'white',
     paddingTop: 20,
     backgroundColor: '#02112a',
-  },
-  tabs: {
-    marginTop: 20,
-  },
-  tab: {
-    padding: 20,
+    paddingBottom: 20,
   },
   image: {
     maxWidth: '100%',
@@ -38,63 +30,18 @@ const styles = {
   },
 };
 
-function TabContainer(props) {
-  return (
-    <Typography component="div" style={{ padding: 8 * 3 }}>
-      {props.children}
-    </Typography>
-  );
-}
-
-TabContainer.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
 class BlockcertsPreview extends Component {
-  constructor (props) {
-    super (props);
-    this.state = {
-      tab: this.props.displayHtml ? 0 : 1
-    }
-    this.tabChange = this.tabChange.bind(this);
-  }
-  tabChange(event, value) {
-    this.setState({tab: value});
-  }
   render() {
-    const { tab } = this.state;
     return (
       <div className={this.props.classes.wrapper}>
         <Paper className={this.props.classes.paper} elevation={4}>
           <div className={this.props.classes.header}>
             <BlockcertsLogo />
-            <Tabs
-              className={this.props.classes.tabs}
-              value={tab}
-              onChange={this.tabChange}
-              indicatorColor='primary'
-              centered
-            >
-              <Tab
-                label="Custom"
-                icon={<SchoolIcon />}
-              />
-              <Tab
-                label="Standard"
-                icon={<SchoolIcon />}
-              />
-            </Tabs>
           </div>
-          {tab === 0 && <TabContainer>
-            <div className={this.props.classes.tab}>
-              {this.props.json.displayHtml && <div dangerouslySetInnerHTML={{__html: this.props.json.displayHtml.replace(/(<? *script)/gi, 'illegalscript')}} >
-              </div>}
-              {!this.props.json.displayHtml && <div>
-                The certificate has no custom display, please view the standard display.
-              </div>}
-            </div>
-          </TabContainer>}
-          {tab === 1 && <TabContainer>
+          {this.props.json.displayHtml && <div className={this.props.classes.tab}>
+            <div dangerouslySetInnerHTML={{__html: this.props.json.displayHtml.replace(/(<? *script)/gi, 'illegalscript')}} ></div>
+          </div>}
+          {!this.props.json.displayHtml && <div>
             <img src={this.props.json.badge.image} className={this.props.classes.image} />
             <Typography paragraph variant="headline" component="h1">
               {this.props.json.title}
@@ -121,7 +68,7 @@ class BlockcertsPreview extends Component {
             <Typography paragraph component="p">
               {this.props.json.badge.issuer.email}
             </Typography>
-          </TabContainer>}
+          </div>}
       </Paper>
       </div>
     );

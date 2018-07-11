@@ -120,7 +120,7 @@ class App extends Component {
           </article>
           <article className="App-section">
             <header>
-              <h2>Certificate preview, BlockCerts v2.0, standard display</h2>
+              <h2>Certificate preview, BlockCerts v2.0, custom display</h2>
               <p>Data injected as a JSON object instead of fetching from an online JSON</p>
             </header>
             <BlockcertsPreview
