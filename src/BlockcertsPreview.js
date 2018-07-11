@@ -62,7 +62,6 @@ class BlockcertsPreview extends Component {
     this.setState({tab: value});
   }
   render() {
-    console.log(this.props.json)
     const { tab } = this.state;
     return (
       <div className={this.props.classes.wrapper}>

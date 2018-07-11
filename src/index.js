@@ -1,5 +1,7 @@
 import Blockcerts from './Blockcerts';
+import BlockcertsPreview from './BlockcertsPreview';
 
 module.exports = {
-  Blockcerts
+  Blockcerts,
+  BlockcertsPreview
 }
