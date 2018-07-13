@@ -85,10 +85,10 @@ class App extends Component {
           <article className="App-section">
             <header>
               <h2>BlockCerts v2.0, custom display, custom additional fields, valid, signed on Ethereum testnet</h2>
-              <p>https://raw.githubusercontent.com/guix77/blockcerts-certificates/master/certificates/ropsten/talao/test8.json</p>
+              <p>https://raw.githubusercontent.com/guix77/blockcerts-certificates/master/certificates/ropsten/talao/duveau-reactblockcerts.json</p>
             </header>
             <Blockcerts
-              url="https://raw.githubusercontent.com/guix77/blockcerts-certificates/master/certificates/ropsten/talao/test8.json"
+              url="https://raw.githubusercontent.com/guix77/blockcerts-certificates/master/certificates/ropsten/talao/duveau-reactblockcerts.json"
             />
           </article>
           <article className="App-section">
