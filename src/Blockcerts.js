@@ -1,21 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Certificate, CertificateVerifier } from 'cert-verifier-js';
-import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import BlockcertsLogo from './BlockcertsLogo';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import SchoolIcon from '@material-ui/icons/School';
 import Timestamp from 'react-timestamp';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import StepContent from '@material-ui/core/StepContent';
-import Button from '@material-ui/core/Button';
+import ReactJson from 'react-json-view';
+
+import { withStyles } from '@material-ui/core/styles';
+import { Button, Paper, Stepper, Step, StepLabel, StepContent, Tabs, Tab, Typography } from '@material-ui/core';
+import { CheckCircle, HighlightOff, School } from '@material-ui/icons';
+
+import BlockcertsLogo from './BlockcertsLogo';
 
 const styles = {
   wrapper: {
@@ -25,12 +18,11 @@ const styles = {
     marginRight: 'auto',
     maxWidth: 992,
   },
-  paper: {
-  },
   header: {
     color: 'white',
     paddingTop: 20,
     backgroundColor: '#02112a',
+    textAlign: 'center',
   },
   tabs: {
     marginTop: 20,
@@ -57,6 +49,11 @@ const styles = {
   },
   verifierButton: {
     margin: 20,
+  },
+  jsonContainer: {
+    textAlign: 'left',
+    fontSize: '10px',
+    overflow: 'hidden',
   },
 };
 
@@ -134,7 +131,8 @@ class Blockcerts extends Component {
       certificate: null,
       verifierStep: 0,
       verifierFailureStep: null,
-      verifierResult: null
+      verifierResult: null,
+      viewJson: false
     }
     this.tabChange = this.tabChange.bind(this);
     this.verifyCertificate = this.verifyCertificate.bind(this);
@@ -155,9 +153,6 @@ class Blockcerts extends Component {
     let certificate = Certificate.parseJson(this.state.certificateJson);
     this.setState({certificate: certificate});
     this.verifyCertificate();
-    if (!this.state.certificateJson.displayHtml && this.state.tab == 0) {
-      this.setState({tab: 1});
-    }
   }
   tabChange(event, value) {
     this.setState({tab: value});
@@ -192,6 +187,15 @@ class Blockcerts extends Component {
   verifierBack() {
     this.setState({verifierStep: this.state.verifierStep - 1});
   }
+  toggleDebug() {
+    if (this.state.viewJson) {
+      this.setState({viewJson: false});
+    }
+    else {
+      this.setState({viewJson: true});
+      console.log(this.state.certificateJson);
+    }
+  }
   render() {
     if (this.state.certificateJson && this.state.certificate) {
       const { tab } = this.state;
@@ -199,7 +203,7 @@ class Blockcerts extends Component {
       const { verifierFailureStep } = this.state;
       return (
         <div className={this.props.classes.wrapper}>
-          <Paper className={this.props.classes.paper} elevation={4}>
+          <Paper elevation={4}>
             <div className={this.props.classes.header}>
               <BlockcertsLogo />
               <Tabs
@@ -210,16 +214,12 @@ class Blockcerts extends Component {
                 centered
               >
                 <Tab
-                  label="Custom"
-                  icon={<SchoolIcon />}
-                />
-                <Tab
-                  label="Standard"
-                  icon={<SchoolIcon />}
+                  label="View"
+                  icon={<School />}
                 />
                 <Tab
                   label={'Verification'}
-                  icon={this.state.verifierResult == 'success' ? <CheckCircleIcon /> : <HighlightOffIcon />}
+                  icon={this.state.verifierResult == 'success' ? <CheckCircle /> : <HighlightOff />}
                 />
               </Tabs>
             </div>
@@ -228,42 +228,39 @@ class Blockcerts extends Component {
                 {this.state.certificateJson.displayHtml && <div dangerouslySetInnerHTML={{__html: this.state.certificateJson.displayHtml.replace(/(<? *script)/gi, 'illegalscript')}} >
                 </div>}
                 {!this.state.certificateJson.displayHtml && <div>
-                  The certificate has no custom display, please view the standard display.
+                  <img src={this.state.certificate.certificateImage} className={this.props.classes.image} />
+                  <Typography paragraph variant="headline" component="h1">
+                    {this.state.certificate.title}
+                  </Typography>
+                  <Typography paragraph variant="subheading" component="h2">
+                    {this.state.certificate.subtitle}
+                  </Typography>
+                  <Typography paragraph variant="caption" component="p">
+                    Awarded on <Timestamp time={this.state.certificateJson.issuedOn.toString()} format="full" /> to
+                  </Typography>
+                  <Typography paragraph variant="title" component="h2">
+                    {this.state.certificate.name}
+                  </Typography>
+                  <Typography paragraph component="p">
+                    {this.state.certificate.description}
+                  </Typography>
+                  <Typography paragraph variant="caption" component="p">
+                    Issued by
+                  </Typography>
+                  <img src={this.state.certificate.sealImage} className={this.props.classes.image} />
+                  <Typography paragraph variant="title" component="h2">
+                    {this.state.certificate.issuer.name}
+                  </Typography>
+                  <Typography paragraph component="p">
+                    {this.state.certificate.issuer.description}
+                  </Typography>
+                  <Typography paragraph component="p">
+                    {this.state.certificate.issuer.email}
+                  </Typography>
                 </div>}
               </div>
             </TabContainer>}
             {tab === 1 && <TabContainer>
-              <img src={this.state.certificate.certificateImage} className={this.props.classes.image} />
-              <Typography paragraph variant="headline" component="h1">
-                {this.state.certificate.title}
-              </Typography>
-              <Typography paragraph variant="subheading" component="h2">
-                {this.state.certificate.subtitle}
-              </Typography>
-              <Typography paragraph variant="caption" component="p">
-                Awarded on <Timestamp time={this.state.certificateJson.issuedOn.toString()} format="full" /> to
-              </Typography>
-              <Typography paragraph variant="title" component="h2">
-                {this.state.certificate.name}
-              </Typography>
-              <Typography paragraph component="p">
-                {this.state.certificate.description}
-              </Typography>
-              <Typography paragraph variant="caption" component="p">
-                Issued by
-              </Typography>
-              <img src={this.state.certificate.sealImage} className={this.props.classes.image} />
-              <Typography paragraph variant="title" component="h2">
-                {this.state.certificate.issuer.name}
-              </Typography>
-              <Typography paragraph component="p">
-                {this.state.certificate.issuer.description}
-              </Typography>
-              <Typography paragraph component="p">
-                {this.state.certificate.issuer.email}
-              </Typography>
-            </TabContainer>}
-            {tab === 2 && <TabContainer>
               <div className={this.props.classes.verifierResult}>
                 <Typography variant="headline" component="h3">
                   {this.state.verifierResult === 'success' ? 'Valid certificate': 'Invalid certificate'}
@@ -271,13 +268,28 @@ class Blockcerts extends Component {
                 <Typography component="p">
                   {this.state.verifierResult === 'success' ? 'All the verification steps succedded. This certificate is valid!': 'Some verification steps did not succeed. This certificate is NOT valid.'}
                 </Typography>
+                <Button className={this.props.classes.verifierButton} variant="contained" color="primary" onClick={this.verifyCertificate}>
+                  Verify
+                </Button>
                 <Button className={this.props.classes.verifierButton} variant="contained" color="primary" href={this.state.certificate.transactionLink}>
                   See blockchain transaction
                 </Button>
-                <Button className={this.props.classes.verifierButton} variant="contained" color="primary" onClick={this.verifyCertificate}>
-                  Verify again
+                <Button
+                  className={this.props.classes.verifierButton}
+                  variant="contained"
+                  onClick={this.toggleDebug.bind(this)}>
+                  Raw data
                 </Button>
               </div>
+              {this.state.viewJson && <div className={this.props.classes.jsonContainer}>
+                <Typography paragraph component="p">
+                  Data is logged in the browser console, too.
+                </Typography>
+                <ReactJson
+                  src={this.state.certificateJson}
+                  collapsed={true}
+                />
+              </div>}
               <div className={this.props.classes.stepper}>
                 <Stepper
                   activeStep={parseInt(verifierStep)}

@@ -28,6 +28,8 @@ Then
       }
     }
 
+If there is some displayHtml in the certificate, the View tab will display it. Otherwise it will display a standard output of the fields defined in the BlockCerts 2.0 standard.
+
 There's also a preview component for unsigned certificates and injected data with a JSON object:
 
     import React, { Component } from 'react';
@@ -42,7 +44,7 @@ There's also a preview component for unsigned certificates and injected data wit
       }
     }
 
-Look at examples/src/App.js for a JSON example, basically it's what Cert-issuer generates.
+Look at examples/src/data/unsignedCertificateExample for a JSON example, basically it's what Cert-issuer generates, with additional custom fields and displayHtml.
 
 ## Development
 

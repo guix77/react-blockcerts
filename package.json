@@ -1,6 +1,6 @@
 {
   "name": "react-blockcerts",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "description": "React component to display and verify a BlockCerts certificate.",
   "main": "dist/index.js",
   "scripts": {
@@ -19,6 +19,7 @@
     "@material-ui/core": "^1.2.1",
     "@material-ui/icons": "^1.1.0",
     "cert-verifier-js": "^1.0.0",
+    "react-json-view": "^1.19.0",
     "react-timestamp": "^4.4.0"
   },
   "devDependencies": {
