@@ -6,7 +6,6 @@ import ReactJson from 'react-json-view';
 
 import { withStyles } from '@material-ui/core/styles';
 import { Button, Paper, Stepper, Step, StepLabel, StepContent, Tabs, Tab, Typography } from '@material-ui/core';
-import { CheckCircle, HighlightOff, School } from '@material-ui/icons';
 
 import BlockcertsLogo from './BlockcertsLogo';
 
@@ -23,9 +22,6 @@ const styles = {
     paddingTop: 20,
     backgroundColor: '#02112a',
     textAlign: 'center',
-  },
-  tabs: {
-    marginTop: 20,
   },
   tab: {
     padding: 20,
@@ -213,14 +209,8 @@ class Blockcerts extends Component {
                 indicatorColor='primary'
                 centered
               >
-                <Tab
-                  label="View"
-                  icon={<School />}
-                />
-                <Tab
-                  label={'Verification'}
-                  icon={this.state.verifierResult == 'success' ? <CheckCircle /> : <HighlightOff />}
-                />
+                <Tab label='View' />
+                <Tab label='Verify' />
               </Tabs>
             </div>
             {tab === 0 && <TabContainer>

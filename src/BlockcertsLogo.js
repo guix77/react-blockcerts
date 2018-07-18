@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 export default class BlockcertsLogo extends Component {
   render() {
     return (
-      <svg width="257" height="60" viewBox="0 0 257 60" xmlns="http://www.w3.org/2000/svg">
+      <svg width="200" height="47" viewBox="0 0 257 60" xmlns="http://www.w3.org/2000/svg">
     <g id="Desktop" fill="none" fillRule="evenodd" transform="translate(-274 -333)">
         <g id="Group-3" transform="translate(275 327)">
             <g id="Group">
