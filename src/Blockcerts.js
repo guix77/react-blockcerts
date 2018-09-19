@@ -23,6 +23,9 @@ const styles = {
     backgroundColor: '#02112a',
     textAlign: 'center',
   },
+  certificateImg: {
+    marginTop: 20
+  },
   tab: {
     padding: 20,
   },
@@ -200,7 +203,7 @@ class Blockcerts extends Component {
       return (
         <div className={this.props.classes.wrapper}>
           <Paper elevation={4}>
-            <div className={this.props.classes.header}>
+            <div className={this.props.classes.header} style={{backgroundColor : this.props.color_bg}}>
               <BlockcertsLogo />
               <Tabs
                 className={this.props.classes.tabs}
@@ -213,6 +216,7 @@ class Blockcerts extends Component {
                 <Tab label='Verify' />
               </Tabs>
             </div>
+            <img src={this.props.image} className={this.props.classes.certificateImg} />
             {tab === 0 && <TabContainer>
               <div className={this.props.classes.tab}>
                 {this.state.certificateJson.displayHtml && <div dangerouslySetInnerHTML={{__html: this.state.certificateJson.displayHtml.replace(/(<? *script)/gi, 'illegalscript')}} >
@@ -326,7 +330,8 @@ class Blockcerts extends Component {
 }
 
 Blockcerts.propTypes = {
-  url: PropTypes.string.isRequired
+  url: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired
 }
 
 export default withStyles(styles)(Blockcerts);
