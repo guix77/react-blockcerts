@@ -18,7 +18,6 @@ const styles = {
   header: {
     color: 'white',
     paddingTop: 20,
-    // backgroundColor: '#02112a',
     textAlign: 'center',
   },
   tab: {
