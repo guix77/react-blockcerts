@@ -24,6 +24,9 @@ const styles = {
   tab: {
     padding: 20,
   },
+  tabs: {
+    marginTop: 10,
+  },
   image: {
     maxWidth: '100%',
     height: 'auto',
