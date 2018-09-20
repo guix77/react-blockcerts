@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Certificate, CertificateVerifier } from 'cert-verifier-js';
 import Timestamp from 'react-timestamp';
 import ReactJson from 'react-json-view';
+import signedCertificateExample from '../examples/src/data/signedCertificateExample.js';
 
 import { withStyles } from '@material-ui/core/styles';
 import { Button, Paper, Stepper, Step, StepLabel, StepContent, Tabs, Tab, Typography } from '@material-ui/core';
@@ -139,9 +140,17 @@ class Blockcerts extends Component {
   async componentDidMount() {
     // Fetch certificate.
     try {
-      const response = await fetch(this.props.url);
-      const certificateJson = await response.json();
-      this.setState({certificateJson: certificateJson});
+      if (this.props.url !== "") {
+        console.log("url")
+        const response = await fetch(this.props.url);
+        const certificateJson = await response.json();
+        this.setState({certificateJson: certificateJson});
+        console.log("certification : " + this.state.certificateJson)
+      } else {
+        console.log("pas url")
+        await this.setState({certificateJson: {signedCertificateExample}});
+        console.log("certification : " + this.state.certificateJson)
+      }
     }
     catch (error) {
       console.error(error);
