@@ -50,13 +50,11 @@ Either an url, OR a json prop **must** be used.
       }
     }
 
-Look at examples/src/data/unsignedCertificateExample for a JSON example, basically it's what Cert-issuer generates, with additional custom fields and displayHtml.
-
 **Props**
 
 An url OR a json prop must be used.
 
-- json (object): the signed certificate as a JSON object
+- json (object): the unsigned certificate as a JSON object
 - color_bg (string): hex code for the header background color (facultative, fallbacks to marine blue)
 - image (string): header image in base 64, like data:image/png;base64,... (facultative, fallbacks to BlockCerts logo)
 
