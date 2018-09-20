@@ -1,7 +1,5 @@
 # react-blockcerts
 
-This is working but still work in progress!
-
 ## Demo
 
 https://guix77.github.io/react-blockcerts/
