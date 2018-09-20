@@ -12,7 +12,7 @@ or
 
     npm add react-blockcerts
 
-Then
+### Blockcerts component for signed certificates
 
     import React, { Component } from 'react';
     import { Blockcerts } from 'react-blockcerts';
@@ -26,9 +26,17 @@ Then
       }
     }
 
-If there is some displayHtml in the certificate, the View tab will display it. Otherwise it will display a standard output of the fields defined in the BlockCerts 2.0 standard.
+**Props**
 
-There's also a preview component for unsigned certificates and injected data with a JSON object:
+Either an url, OR a json prop **must** be used.
+
+- url (string): url of the JSON of the signed certificate
+- json (object): the signed certificate as a JSON object
+- color (string): hex code for the header color text (facultative, fallbacks to white)
+- color_bg (string): hex code for the header background color (facultative, fallbacks to marine blue)
+- image (string): header image in base 64, like data:image/png;base64,... (facultative, fallbacks to BlockCerts logo)
+
+### BlockcertsPreview component for unsigned certificates
 
     import React, { Component } from 'react';
     import { BlockcertsPreview } from 'react-blockcerts';
@@ -43,6 +51,14 @@ There's also a preview component for unsigned certificates and injected data wit
     }
 
 Look at examples/src/data/unsignedCertificateExample for a JSON example, basically it's what Cert-issuer generates, with additional custom fields and displayHtml.
+
+**Props**
+
+An url OR a json prop must be used.
+
+- json (object): the signed certificate as a JSON object
+- color_bg (string): hex code for the header background color (facultative, fallbacks to marine blue)
+- image (string): header image in base 64, like data:image/png;base64,... (facultative, fallbacks to BlockCerts logo)
 
 ## Development
 

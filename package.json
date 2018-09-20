@@ -1,6 +1,6 @@
 {
   "name": "react-blockcerts",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "React component to display and verify a BlockCerts certificate.",
   "main": "dist/index.js",
   "scripts": {
