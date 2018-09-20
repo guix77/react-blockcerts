@@ -36,6 +36,8 @@ class App extends Component {
             </header>
             <BlockcertsPreview
               json={unsignedCertificateExample.json}
+              image={certificateImage}
+              color_bg="#7f8c8d"
             />
           </article>
         </div>
