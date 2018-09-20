@@ -33,22 +33,24 @@ class App extends Component {
           </article>
           <article className="App-section">
             <header>
-              <h2>Same but custom header image and background color, and certificate provided as a JSON object prop</h2>
+              <h2>Same but custom header image, text and background colors, and certificate provided as a JSON object prop</h2>
               <p>https://raw.githubusercontent.com/guix77/blockcerts-certificates/master/certificates/ropsten/talao/duveau-improve-certificates.json</p>
             </header>
             <Blockcerts
               json={signedCertificateExample.json}
               image={talaoCertificateImage}
+              color='#282828'
               color_bg="#edecec"
             />
           </article>
           <article className="App-section">
             <header>
-              <h2>Unsigned certificate (BlockcertsPreview component). Same options exist for custom image and background color. Certificate provided as a JSON object prop.</h2>
+              <h2>Unsigned certificate (BlockcertsPreview component). Header with custom image and background color. Certificate provided as a JSON object prop.</h2>
             </header>
             <BlockcertsPreview
               json={unsignedCertificateExample.json}
               image={talaoCertificateImage}
+              color='#282828'
               color_bg="#edecec"
             />
           </article>

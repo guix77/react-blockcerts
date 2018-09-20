@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
 import { withStyles } from '@material-ui/core/styles';
 import { Button, Paper, Typography} from '@material-ui/core';
-
 import Timestamp from 'react-timestamp';
 import blockcertsLogo from './data/blockcertsLogo';
 

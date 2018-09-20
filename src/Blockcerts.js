@@ -3,10 +3,8 @@ import PropTypes from 'prop-types';
 import { Certificate, CertificateVerifier } from 'cert-verifier-js';
 import Timestamp from 'react-timestamp';
 import ReactJson from 'react-json-view';
-
 import { withStyles } from '@material-ui/core/styles';
 import { Button, Paper, Stepper, Step, StepLabel, StepContent, Tabs, Tab, Typography } from '@material-ui/core';
-
 import blockcertsLogo from './data/blockcertsLogo';
 
 const styles = {
@@ -18,7 +16,6 @@ const styles = {
     maxWidth: 992,
   },
   header: {
-    color: 'white',
     paddingTop: 20,
     textAlign: 'center',
   },
@@ -206,7 +203,15 @@ class Blockcerts extends Component {
       return (
         <div className={this.props.classes.wrapper}>
           <Paper elevation={4}>
-            <div className={this.props.classes.header} style={{backgroundColor : this.props.color_bg}}>
+            <div
+              className={this.props.classes.header}
+              style={
+                {
+                  color:this.props.color,
+                  backgroundColor:this.props.color_bg
+                }
+              }
+            >
               <img src={this.props.image} />
               <Tabs
                 className={this.props.classes.tabs}
@@ -332,6 +337,7 @@ class Blockcerts extends Component {
 }
 
 Blockcerts.defaultProps = {
+  color: 'white',
   color_bg: '#02112a',
   image: blockcertsLogo
  };
@@ -340,6 +346,7 @@ Blockcerts.propTypes = {
   url: PropTypes.string,
   json: PropTypes.object,
   image: PropTypes.string,
+  color: PropTypes.string,
   color_bg: PropTypes.string
 }
 
