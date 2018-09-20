@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+
 import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import BlockcertsLogo from './BlockcertsLogo';
-import Typography from '@material-ui/core/Typography';
+import { Button, Paper, Typography} from '@material-ui/core';
+
 import Timestamp from 'react-timestamp';
-import Button from '@material-ui/core/Button';
+import blockcertsLogo from './data/blockcertsLogo';
 
 const styles = {
   wrapper: {
@@ -20,7 +20,6 @@ const styles = {
   header: {
     color: 'white',
     paddingTop: 20,
-    backgroundColor: '#02112a',
     paddingBottom: 20,
   },
   image: {
@@ -35,8 +34,11 @@ class BlockcertsPreview extends Component {
     return (
       <div className={this.props.classes.wrapper}>
         <Paper className={this.props.classes.paper} elevation={4}>
-          <div className={this.props.classes.header}>
-            <BlockcertsLogo />
+          <div
+            className={this.props.classes.header}
+            style={{backgroundColor : this.props.color_bg}}
+          >
+            <img src={this.props.image} />
           </div>
           {this.props.json.displayHtml && <div className={this.props.classes.tab}>
             <div dangerouslySetInnerHTML={{__html: this.props.json.displayHtml.replace(/(<? *script)/gi, 'illegalscript')}} ></div>
@@ -55,9 +57,6 @@ class BlockcertsPreview extends Component {
             <Typography paragraph variant="title" component="h2">
               {this.props.json.recipientProfile.name}
             </Typography>
-            {/* <Typography paragraph component="p">
-              {this.props.json.description}
-            </Typography> */}
             <Typography paragraph variant="caption" component="p">
               Issued by
             </Typography>
@@ -75,8 +74,15 @@ class BlockcertsPreview extends Component {
   }
 }
 
+BlockcertsPreview.defaultProps = {
+  color_bg: '#02112a',
+  image: blockcertsLogo
+ };
+
 BlockcertsPreview.propTypes = {
   json: PropTypes.object.isRequired,
+  image: PropTypes.string,
+  color_bg: PropTypes.string
 }
 
 export default withStyles(styles)(BlockcertsPreview);

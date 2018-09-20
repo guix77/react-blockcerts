@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
+
 import Blockcerts from '../../src/Blockcerts';
 import BlockcertsPreview from '../../src/BlockcertsPreview';
-import unsignedCertificateExample from './data/unsignedCertificateExample.js';
+
+import unsignedCertificateExample from './data/unsignedCertificateExample';
+import signedCertificateExample from './data/signedCertificateExample';
+
+import talaoCertificateImage from './data/talaoCertificateImage';
 
 class App extends Component {
   render() {
@@ -19,19 +24,32 @@ class App extends Component {
         <div className="App-content">
           <article className="App-section">
             <header>
-              <h2>Signed certificate (Blockcerts component), BlockCerts v2.0, custom display, custom additional fields, valid, signed on Ethereum testnet</h2>
-              <p>https://raw.githubusercontent.com/guix77/blockcerts-certificates/master/certificates/ropsten/talao/duveau-reactblockcerts.json</p>
+              <h2>Signed certificate (Blockcerts component), BlockCerts v2.0, custom display, custom additional fields, valid, signed on Ethereum testnet, certificate provided as an URL prop to an online JSON</h2>
+              <p>https://raw.githubusercontent.com/guix77/blockcerts-certificates/master/certificates/ropsten/talao/duveau-improve-certificates.json</p>
             </header>
             <Blockcerts
-              url="https://raw.githubusercontent.com/guix77/blockcerts-certificates/master/certificates/ropsten/talao/duveau-reactblockcerts.json"
+              url="https://raw.githubusercontent.com/guix77/blockcerts-certificates/master/certificates/ropsten/talao/duveau-improve-certificates.json"
             />
           </article>
           <article className="App-section">
             <header>
-              <h2>Unsigned certificate (BlockcertsPreview component), BlockCerts v2.0, custom display, custom additional fields, prepared for Ethereum</h2>
+              <h2>Same but custom header image and background color, and certificate provided as a JSON object prop</h2>
+              <p>https://raw.githubusercontent.com/guix77/blockcerts-certificates/master/certificates/ropsten/talao/duveau-improve-certificates.json</p>
+            </header>
+            <Blockcerts
+              json={signedCertificateExample.json}
+              image={talaoCertificateImage}
+              color_bg="#edecec"
+            />
+          </article>
+          <article className="App-section">
+            <header>
+              <h2>Unsigned certificate (BlockcertsPreview component). Same options exist for custom image and background color. Certificate provided as a JSON object prop.</h2>
             </header>
             <BlockcertsPreview
               json={unsignedCertificateExample.json}
+              image={talaoCertificateImage}
+              color_bg="#edecec"
             />
           </article>
         </div>

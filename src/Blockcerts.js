@@ -7,7 +7,7 @@ import ReactJson from 'react-json-view';
 import { withStyles } from '@material-ui/core/styles';
 import { Button, Paper, Stepper, Step, StepLabel, StepContent, Tabs, Tab, Typography } from '@material-ui/core';
 
-import BlockcertsLogo from './BlockcertsLogo';
+import blockcertsLogo from './data/blockcertsLogo';
 
 const styles = {
   wrapper: {
@@ -20,11 +20,13 @@ const styles = {
   header: {
     color: 'white',
     paddingTop: 20,
-    backgroundColor: '#02112a',
     textAlign: 'center',
   },
   tab: {
     padding: 20,
+  },
+  tabs: {
+    marginTop: 10,
   },
   image: {
     maxWidth: '100%',
@@ -139,9 +141,13 @@ class Blockcerts extends Component {
   async componentDidMount() {
     // Fetch certificate.
     try {
-      const response = await fetch(this.props.url);
-      const certificateJson = await response.json();
-      this.setState({certificateJson: certificateJson});
+      if (this.props.url) {
+        const response = await fetch(this.props.url);
+        const certificateJson = await response.json();
+        this.setState({certificateJson: certificateJson});
+      } else {
+        await this.setState({certificateJson: this.props.json});
+      }
     }
     catch (error) {
       console.error(error);
@@ -200,8 +206,8 @@ class Blockcerts extends Component {
       return (
         <div className={this.props.classes.wrapper}>
           <Paper elevation={4}>
-            <div className={this.props.classes.header}>
-              <BlockcertsLogo />
+            <div className={this.props.classes.header} style={{backgroundColor : this.props.color_bg}}>
+              <img src={this.props.image} />
               <Tabs
                 className={this.props.classes.tabs}
                 value={tab}
@@ -325,8 +331,16 @@ class Blockcerts extends Component {
   }
 }
 
+Blockcerts.defaultProps = {
+  color_bg: '#02112a',
+  image: blockcertsLogo
+ };
+
 Blockcerts.propTypes = {
-  url: PropTypes.string.isRequired
+  url: PropTypes.string,
+  json: PropTypes.object,
+  image: PropTypes.string,
+  color_bg: PropTypes.string
 }
 
 export default withStyles(styles)(Blockcerts);
