@@ -40,7 +40,7 @@ class App extends Component {
               json={signedCertificateExample.json}
               image={talaoCertificateImage}
               color='#282828'
-              color_bg="#edecec"
+              color_bg='#edecec'
             />
           </article>
           <article className="App-section">

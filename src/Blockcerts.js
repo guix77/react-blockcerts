@@ -14,6 +14,7 @@ const styles = {
     marginLeft: 'auto',
     marginRight: 'auto',
     maxWidth: 992,
+    backgroundColor: 'white',
   },
   header: {
     paddingTop: 20,
@@ -150,6 +151,7 @@ class Blockcerts extends Component {
       console.error(error);
     }
     let certificate = Certificate.parseJson(this.state.certificateJson);
+    console.log(this.state.certificateJson)
     this.setState({certificate: certificate});
     this.verifyCertificate();
   }
@@ -202,131 +204,129 @@ class Blockcerts extends Component {
       const { verifierFailureStep } = this.state;
       return (
         <div className={this.props.classes.wrapper}>
-          <Paper elevation={4}>
-            <div
-              className={this.props.classes.header}
-              style={
-                {
-                  color:this.props.color,
-                  backgroundColor:this.props.color_bg
-                }
+          <div
+            className={this.props.classes.header}
+            style={
+              {
+                color:this.props.color,
+                backgroundColor:this.props.color_bg
               }
+            }
+          >
+            <img src={this.props.image} />
+            <Tabs
+              className={this.props.classes.tabs}
+              value={tab}
+              onChange={this.tabChange}
+              indicatorColor='primary'
+              centered
             >
-              <img src={this.props.image} />
-              <Tabs
-                className={this.props.classes.tabs}
-                value={tab}
-                onChange={this.tabChange}
-                indicatorColor='primary'
-                centered
-              >
-                <Tab label='View' />
-                <Tab label='Verify' />
-              </Tabs>
-            </div>
-            {tab === 0 && <TabContainer>
-              <div className={this.props.classes.tab}>
-                {this.state.certificateJson.displayHtml && <div dangerouslySetInnerHTML={{__html: this.state.certificateJson.displayHtml.replace(/(<? *script)/gi, 'illegalscript')}} >
-                </div>}
-                {!this.state.certificateJson.displayHtml && <div>
-                  <img src={this.state.certificate.certificateImage} className={this.props.classes.image} />
-                  <Typography paragraph variant="headline" component="h1">
-                    {this.state.certificate.title}
-                  </Typography>
-                  <Typography paragraph variant="subheading" component="h2">
-                    {this.state.certificate.subtitle}
-                  </Typography>
-                  <Typography paragraph variant="caption" component="p">
-                    Awarded on <Timestamp time={this.state.certificateJson.issuedOn.toString()} format="full" /> to
-                  </Typography>
-                  <Typography paragraph variant="title" component="h2">
-                    {this.state.certificate.name}
-                  </Typography>
-                  <Typography paragraph component="p">
-                    {this.state.certificate.description}
-                  </Typography>
-                  <Typography paragraph variant="caption" component="p">
-                    Issued by
-                  </Typography>
-                  <img src={this.state.certificate.sealImage} className={this.props.classes.image} />
-                  <Typography paragraph variant="title" component="h2">
-                    {this.state.certificate.issuer.name}
-                  </Typography>
-                  <Typography paragraph component="p">
-                    {this.state.certificate.issuer.description}
-                  </Typography>
-                  <Typography paragraph component="p">
-                    {this.state.certificate.issuer.email}
-                  </Typography>
-                </div>}
-              </div>
-            </TabContainer>}
-            {tab === 1 && <TabContainer>
-              <div className={this.props.classes.verifierResult}>
-                <Typography variant="headline" component="h3">
-                  {this.state.verifierResult === 'success' ? 'Valid certificate': 'Invalid certificate'}
-                </Typography>
-                <Typography component="p">
-                  {this.state.verifierResult === 'success' ? 'All the verification steps succedded. This certificate is valid!': 'Some verification steps did not succeed. This certificate is NOT valid.'}
-                </Typography>
-                <Button className={this.props.classes.verifierButton} variant="contained" color="primary" onClick={this.verifyCertificate}>
-                  Verify
-                </Button>
-                <Button className={this.props.classes.verifierButton} variant="contained" color="primary" href={this.state.certificate.transactionLink}>
-                  See blockchain transaction
-                </Button>
-                <Button
-                  className={this.props.classes.verifierButton}
-                  variant="contained"
-                  onClick={this.toggleDebug.bind(this)}>
-                  Raw data
-                </Button>
-              </div>
-              {this.state.viewJson && <div className={this.props.classes.jsonContainer}>
-                <Typography paragraph component="p">
-                  Data is logged in the browser console, too.
-                </Typography>
-                <ReactJson
-                  src={this.state.certificateJson}
-                  collapsed={true}
-                />
+              <Tab label='View' />
+              <Tab label='Verify' />
+            </Tabs>
+          </div>
+          {tab === 0 && <TabContainer>
+            <div className={this.props.classes.tab}>
+              {this.state.certificateJson.displayHtml && <div dangerouslySetInnerHTML={{__html: this.state.certificateJson.displayHtml.replace(/(<? *script)/gi, 'illegalscript')}} >
               </div>}
-              <div className={this.props.classes.stepper}>
-                <Stepper
-                  activeStep={parseInt(verifierStep)}
-                  orientation="vertical">
-                  {verifierSteps.map((step, index) => {
-                    return (
-                      <Step key={index}>
-                        <StepLabel>{step.name}</StepLabel>
-                        <StepContent>
-                          <Typography>{step.description}</Typography>
-                          <div className={this.props.classes.stepButtons}>
-                            {verifierStep > 0 && <Button
-                              size="small"
-                              color="secondary"
-                              className={this.props.classes.stepButton}
-                              onClick={this.verifierBack}
-                            >
-                              Back
-                            </Button>}
-                            {(verifierStep < verifierSteps.length - 1 && (!verifierFailureStep || verifierStep < verifierFailureStep)) && <Button
-                              size="small"
-                              color="secondary"
-                              className={this.props.classes.stepButton}
-                              onClick={this.verifierNext}
-                            >
-                              Next
-                            </Button>}
-                          </div>
-                        </StepContent>
-                      </Step>
-                    );
-                  })}
-                </Stepper>
-              </div>
-            </TabContainer>}
-        </Paper>
+              {!this.state.certificateJson.displayHtml && <div>
+                <img src={this.state.certificate.certificateImage} className={this.props.classes.image} />
+                <Typography paragraph variant="headline" component="h1">
+                  {this.state.certificate.title}
+                </Typography>
+                <Typography paragraph variant="subheading" component="h2">
+                  {this.state.certificate.subtitle}
+                </Typography>
+                <Typography paragraph variant="caption" component="p">
+                  Awarded on <Timestamp time={this.state.certificateJson.issuedOn.toString()} format="full" /> to
+                </Typography>
+                <Typography paragraph variant="title" component="h2">
+                  {this.state.certificate.name}
+                </Typography>
+                <Typography paragraph component="p">
+                  {this.state.certificate.description}
+                </Typography>
+                <Typography paragraph variant="caption" component="p">
+                  Issued by
+                </Typography>
+                <img src={this.state.certificate.sealImage} className={this.props.classes.image} />
+                <Typography paragraph variant="title" component="h2">
+                  {this.state.certificate.issuer.name}
+                </Typography>
+                <Typography paragraph component="p">
+                  {this.state.certificate.issuer.description}
+                </Typography>
+                <Typography paragraph component="p">
+                  {this.state.certificate.issuer.email}
+                </Typography>
+              </div>}
+            </div>
+          </TabContainer>}
+          {tab === 1 && <TabContainer>
+            <div className={this.props.classes.verifierResult}>
+              <Typography variant="headline" component="h3">
+                {this.state.verifierResult === 'success' ? 'Valid certificate': 'Invalid certificate'}
+              </Typography>
+              <Typography component="p">
+                {this.state.verifierResult === 'success' ? 'All the verification steps succedded. This certificate is valid!': 'Some verification steps did not succeed. This certificate is NOT valid.'}
+              </Typography>
+              <Button className={this.props.classes.verifierButton} variant="contained" color="primary" onClick={this.verifyCertificate}>
+                Verify
+              </Button>
+              <Button className={this.props.classes.verifierButton} variant="contained" color="primary" href={this.state.certificate.transactionLink}>
+                See blockchain transaction
+              </Button>
+              <Button
+                className={this.props.classes.verifierButton}
+                variant="contained"
+                onClick={this.toggleDebug.bind(this)}>
+                Raw data
+              </Button>
+            </div>
+            {this.state.viewJson && <div className={this.props.classes.jsonContainer}>
+              <Typography paragraph component="p">
+                Data is logged in the browser console, too.
+              </Typography>
+              <ReactJson
+                src={this.state.certificateJson}
+                collapsed={true}
+              />
+            </div>}
+            <div className={this.props.classes.stepper}>
+              <Stepper
+                activeStep={parseInt(verifierStep)}
+                orientation="vertical">
+                {verifierSteps.map((step, index) => {
+                  return (
+                    <Step key={index}>
+                      <StepLabel>{step.name}</StepLabel>
+                      <StepContent>
+                        <Typography>{step.description}</Typography>
+                        <div className={this.props.classes.stepButtons}>
+                          {verifierStep > 0 && <Button
+                            size="small"
+                            color="secondary"
+                            className={this.props.classes.stepButton}
+                            onClick={this.verifierBack}
+                          >
+                            Back
+                          </Button>}
+                          {(verifierStep < verifierSteps.length - 1 && (!verifierFailureStep || verifierStep < verifierFailureStep)) && <Button
+                            size="small"
+                            color="secondary"
+                            className={this.props.classes.stepButton}
+                            onClick={this.verifierNext}
+                          >
+                            Next
+                          </Button>}
+                        </div>
+                      </StepContent>
+                    </Step>
+                  );
+                })}
+              </Stepper>
+            </div>
+          </TabContainer>}
         </div>
       );
     }

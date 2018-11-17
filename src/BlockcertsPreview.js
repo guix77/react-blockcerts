@@ -12,6 +12,7 @@ const styles = {
     marginLeft: 'auto',
     marginRight: 'auto',
     maxWidth: 992,
+    backgroundColor: 'white',
   },
   paper: {
   },
@@ -31,42 +32,40 @@ class BlockcertsPreview extends Component {
   render() {
     return (
       <div className={this.props.classes.wrapper}>
-        <Paper className={this.props.classes.paper} elevation={4}>
-          <div
-            className={this.props.classes.header}
-            style={{backgroundColor : this.props.color_bg}}
-          >
-            <img src={this.props.image} />
-          </div>
-          {this.props.json.displayHtml && <div className={this.props.classes.tab}>
-            <div dangerouslySetInnerHTML={{__html: this.props.json.displayHtml.replace(/(<? *script)/gi, 'illegalscript')}} ></div>
-          </div>}
-          {!this.props.json.displayHtml && <div>
-            <img src={this.props.json.badge.image} className={this.props.classes.image} />
-            <Typography paragraph variant="headline" component="h1">
-              {this.props.json.title}
-            </Typography>
-            <Typography paragraph variant="subheading" component="h2">
-              {this.props.json.badge.name}
-            </Typography>
-            <Typography paragraph variant="caption" component="p">
-              Awarded on <Timestamp time={this.props.json.issuedOn.toString()} format="full" /> to
-            </Typography>
-            <Typography paragraph variant="title" component="h2">
-              {this.props.json.recipientProfile.name}
-            </Typography>
-            <Typography paragraph variant="caption" component="p">
-              Issued by
-            </Typography>
-            <img src={this.props.json.badge.issuer.image} className={this.props.classes.image} />
-            <Typography paragraph variant="title" component="h2">
-              {this.props.json.badge.issuer.name}
-            </Typography>
-            <Typography paragraph component="p">
-              {this.props.json.badge.issuer.email}
-            </Typography>
-          </div>}
-      </Paper>
+        <div
+          className={this.props.classes.header}
+          style={{backgroundColor : this.props.color_bg}}
+        >
+          <img src={this.props.image} />
+        </div>
+        {this.props.json.displayHtml && <div className={this.props.classes.tab}>
+          <div dangerouslySetInnerHTML={{__html: this.props.json.displayHtml.replace(/(<? *script)/gi, 'illegalscript')}} ></div>
+        </div>}
+        {!this.props.json.displayHtml && <div>
+          <img src={this.props.json.badge.image} className={this.props.classes.image} />
+          <Typography paragraph variant="headline" component="h1">
+            {this.props.json.title}
+          </Typography>
+          <Typography paragraph variant="subheading" component="h2">
+            {this.props.json.badge.name}
+          </Typography>
+          <Typography paragraph variant="caption" component="p">
+            Awarded on <Timestamp time={this.props.json.issuedOn.toString()} format="full" /> to
+          </Typography>
+          <Typography paragraph variant="title" component="h2">
+            {this.props.json.recipientProfile.name}
+          </Typography>
+          <Typography paragraph variant="caption" component="p">
+            Issued by
+          </Typography>
+          <img src={this.props.json.badge.issuer.image} className={this.props.classes.image} />
+          <Typography paragraph variant="title" component="h2">
+            {this.props.json.badge.issuer.name}
+          </Typography>
+          <Typography paragraph component="p">
+            {this.props.json.badge.issuer.email}
+          </Typography>
+        </div>}
       </div>
     );
   }
