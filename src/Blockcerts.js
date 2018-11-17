@@ -151,7 +151,6 @@ class Blockcerts extends Component {
       console.error(error);
     }
     let certificate = Certificate.parseJson(this.state.certificateJson);
-    console.log(this.state.certificateJson)
     this.setState({certificate: certificate});
     this.verifyCertificate();
   }
