@@ -1,10 +1,22 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Certificate, CertificateVerifier } from 'cert-verifier-js';
 import Timestamp from 'react-timestamp';
 import ReactJson from 'react-json-view';
-import { withStyles } from '@material-ui/core/styles';
-import { Button, Paper, Stepper, Step, StepLabel, StepContent, Tabs, Tab, Typography } from '@material-ui/core';
+
+import {
+  Button,
+  Paper,
+  Stepper,
+  Step,
+  StepLabel,
+  StepContent,
+  Tabs,
+  Tab,
+  Typography,
+  withStyles
+} from '@material-ui/core';
+
 import blockcertsLogo from './data/blockcertsLogo';
 
 const styles = {
@@ -125,6 +137,7 @@ class Blockcerts extends Component {
       tab: 0,
       certificateJson: null,
       certificate: null,
+      verifierExecuted: false,
       verifierStep: 0,
       verifierFailureStep: null,
       verifierResult: null,
@@ -136,39 +149,29 @@ class Blockcerts extends Component {
     this.verifierNext = this.verifierNext.bind(this);
     this.verifierBack = this.verifierBack.bind(this);
   }
-  async componentDidMount() {
-    // Fetch certificate.
-    try {
-      if (this.props.url) {
-        const response = await fetch(this.props.url);
-        const certificateJson = await response.json();
-        this.setState({certificateJson: certificateJson});
-      } else {
-        await this.setState({certificateJson: this.props.json});
-      }
-    }
-    catch (error) {
-      console.error(error);
-    }
-    let certificate = Certificate.parseJson(this.state.certificateJson);
-    this.setState({certificate: certificate});
-    this.verifyCertificate();
-  }
+
   tabChange(event, value) {
     this.setState({tab: value});
   }
+
   verifyCertificate() {
-    if (this.state.certificateJson) {
-      let verifier = new CertificateVerifier(
-        JSON.stringify(this.state.certificateJson),
-        this.verifierStepper
-      );
-      verifier
-      .verify()
-      .then(result => this.setState({verifierResult: result}))
-      .catch(e => console.error(e));
-    }
+    const { certificateJson } = this.state;
+    const verifier = new CertificateVerifier(
+      JSON.stringify(certificateJson),
+      this.verifierStepper
+    );
+    verifier.verify()
+    .then(
+      result => {
+        this.setState({
+          verifierExecuted: true,
+          verifierResult: result
+        });
+      }
+    )
+    .catch(e => console.error(e));
   }
+
   verifierStepper(status) {
     if (status !== 'failure') {
       let step = Object.keys(verifierSteps).find(key => verifierSteps[key].status === status);
@@ -196,15 +199,31 @@ class Blockcerts extends Component {
       console.log(this.state.certificateJson);
     }
   }
+  async componentDidMount() {
+    // Fetch certificate.
+    try {
+      if (this.props.url) {
+        const response = await fetch(this.props.url);
+        const certificateJson = await response.json();
+        this.setState({certificateJson: certificateJson});
+      } else {
+        await this.setState({certificateJson: this.props.json});
+      }
+    }
+    catch (error) {
+      console.error(error);
+    }
+    let certificate = Certificate.parseJson(this.state.certificateJson);
+    this.setState({certificate: certificate});
+  }
   render() {
     if (this.state.certificateJson && this.state.certificate) {
-      const { tab } = this.state;
-      const { verifierStep } = this.state;
-      const { verifierFailureStep } = this.state;
+      const { classes } = this.props;
+      const { tab, verifierExecuted, verifierStep, verifierFailureStep } = this.state;
       return (
-        <div className={this.props.classes.wrapper}>
+        <div className={classes.wrapper}>
           <div
-            className={this.props.classes.header}
+            className={classes.header}
             style={
               {
                 color:this.props.color,
@@ -214,22 +233,25 @@ class Blockcerts extends Component {
           >
             <img src={this.props.image} />
             <Tabs
-              className={this.props.classes.tabs}
+              className={classes.tabs}
               value={tab}
               onChange={this.tabChange}
               indicatorColor='primary'
               centered
             >
               <Tab label='View' />
-              <Tab label='Verify' />
+              <Tab
+                onClick={this.verifyCertificate}
+                label='Verify'
+              />
             </Tabs>
           </div>
           {tab === 0 && <TabContainer>
-            <div className={this.props.classes.tab}>
+            <div className={classes.tab}>
               {this.state.certificateJson.displayHtml && <div dangerouslySetInnerHTML={{__html: this.state.certificateJson.displayHtml.replace(/(<? *script)/gi, 'illegalscript')}} >
               </div>}
               {!this.state.certificateJson.displayHtml && <div>
-                <img src={this.state.certificate.certificateImage} className={this.props.classes.image} />
+                <img src={this.state.certificate.certificateImage} className={classes.image} />
                 <Typography paragraph variant="headline" component="h1">
                   {this.state.certificate.title}
                 </Typography>
@@ -248,7 +270,7 @@ class Blockcerts extends Component {
                 <Typography paragraph variant="caption" component="p">
                   Issued by
                 </Typography>
-                <img src={this.state.certificate.sealImage} className={this.props.classes.image} />
+                <img src={this.state.certificate.sealImage} className={classes.image} />
                 <Typography paragraph variant="title" component="h2">
                   {this.state.certificate.issuer.name}
                 </Typography>
@@ -262,27 +284,30 @@ class Blockcerts extends Component {
             </div>
           </TabContainer>}
           {tab === 1 && <TabContainer>
-            <div className={this.props.classes.verifierResult}>
-              <Typography variant="headline" component="h3">
-                {this.state.verifierResult === 'success' ? 'Valid certificate': 'Invalid certificate'}
-              </Typography>
-              <Typography component="p">
-                {this.state.verifierResult === 'success' ? 'All the verification steps succedded. This certificate is valid!': 'Some verification steps did not succeed. This certificate is NOT valid.'}
-              </Typography>
-              <Button className={this.props.classes.verifierButton} variant="contained" color="primary" onClick={this.verifyCertificate}>
-                Verify
-              </Button>
-              <Button className={this.props.classes.verifierButton} variant="contained" color="primary" href={this.state.certificate.transactionLink}>
-                See blockchain transaction
-              </Button>
-              <Button
-                className={this.props.classes.verifierButton}
-                variant="contained"
-                onClick={this.toggleDebug.bind(this)}>
-                Raw data
-              </Button>
+            <div className={classes.verifierResult}>
+              {
+                verifierExecuted &&
+                  <Fragment>
+                    <Typography variant="headline" component="h3">
+                      {this.state.verifierResult === 'success' ? 'Valid certificate': 'Invalid certificate'}
+                    </Typography>
+                    <Typography component="p">
+                      {this.state.verifierResult === 'success' ? 'All the verification steps succedded. This certificate is valid!': 'Some verification steps did not succeed. This certificate is NOT valid.'}
+                    </Typography>
+
+                    <Button className={classes.verifierButton} variant="contained" color="primary" href={this.state.certificate.transactionLink}>
+                      See blockchain transaction
+                    </Button>
+                    <Button
+                      className={classes.verifierButton}
+                      variant="contained"
+                      onClick={this.toggleDebug.bind(this)}>
+                      Raw data
+                    </Button>
+                  </Fragment>
+              }
             </div>
-            {this.state.viewJson && <div className={this.props.classes.jsonContainer}>
+            {this.state.viewJson && <div className={classes.jsonContainer}>
               <Typography paragraph component="p">
                 Data is logged in the browser console, too.
               </Typography>
@@ -291,7 +316,7 @@ class Blockcerts extends Component {
                 collapsed={true}
               />
             </div>}
-            <div className={this.props.classes.stepper}>
+            <div className={classes.stepper}>
               <Stepper
                 activeStep={parseInt(verifierStep)}
                 orientation="vertical">
@@ -301,11 +326,11 @@ class Blockcerts extends Component {
                       <StepLabel>{step.name}</StepLabel>
                       <StepContent>
                         <Typography>{step.description}</Typography>
-                        <div className={this.props.classes.stepButtons}>
+                        <div className={classes.stepButtons}>
                           {verifierStep > 0 && <Button
                             size="small"
                             color="secondary"
-                            className={this.props.classes.stepButton}
+                            className={classes.stepButton}
                             onClick={this.verifierBack}
                           >
                             Back
@@ -313,7 +338,7 @@ class Blockcerts extends Component {
                           {(verifierStep < verifierSteps.length - 1 && (!verifierFailureStep || verifierStep < verifierFailureStep)) && <Button
                             size="small"
                             color="secondary"
-                            className={this.props.classes.stepButton}
+                            className={classes.stepButton}
                             onClick={this.verifierNext}
                           >
                             Next
