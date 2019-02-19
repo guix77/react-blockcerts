@@ -1,5 +1,7 @@
 # react-blockcerts
 
+**Looking for a new maintainer. Please make a PR with valuable modifications and I'll make you maintainer.**
+
 ## Demo
 
 https://guix77.github.io/react-blockcerts/
