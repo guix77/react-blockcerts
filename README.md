@@ -8,22 +8,17 @@ https://guix77.github.io/react-blockcerts/
 
     yarn add react-blockcerts
 
-or
-
-    npm add react-blockcerts
-
 ### Blockcerts component for signed certificates
 
-    import React, { Component } from 'react';
-    import { Blockcerts } from 'react-blockcerts';
-    export defaut MyComponent extends Component {
-      render() {
-        return(
-          <Blockcerts
-            url="https://raw.githubusercontent.com/blockchain-certificates/cert-verifier-js/master/tests/data/sample-cert-mainnet-valid-2.0.json"
-          />
-        );
-      }
+    import React from 'react'
+    import Blockcerts from 'react-blockcerts'
+
+    const App = () => {
+      return (
+        <Blockcerts
+          url="https://raw.githubusercontent.com/blockchain-certificates/cert-verifier-js/master/tests/data/sample-cert-mainnet-valid-2.0.json"
+        />
+      )
     }
 
 **Props**
@@ -36,35 +31,17 @@ Either an url, OR a json prop **must** be used.
 - color_bg (string): hex code for the header background color (facultative, fallbacks to marine blue)
 - image (string): header image in base 64, like data:image/png;base64,... (facultative, fallbacks to BlockCerts logo)
 
-### BlockcertsPreview component for unsigned certificates
-
-    import React, { Component } from 'react';
-    import { BlockcertsPreview } from 'react-blockcerts';
-    export defaut MyComponent extends Component {
-      render() {
-        return(
-          <BlockcertsPreview
-            json={}
-          />
-        );
-      }
-    }
-
-**Props**
-
-An url OR a json prop must be used.
-
-- json (object): the unsigned certificate as a JSON object
-- color_bg (string): hex code for the header background color (facultative, fallbacks to marine blue)
-- image (string): header image in base 64, like data:image/png;base64,... (facultative, fallbacks to BlockCerts logo)
-
 ## Development
 
 *You do not need this if you are just using react-blockcerts.*
 
-Watch files and run a development server on http://localhost:3000/
+Run a development server on http://localhost:3000/ and watch files:
 
     yarn start
+
+Lint:
+
+    yarn test
 
 Publish NPM package:
 

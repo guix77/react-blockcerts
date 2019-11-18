@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Blockcerts from '../../src/Blockcerts'
+import Blockcerts from '../../src/components/organisms/Blockcerts'
 import talaoCertificateImage from './assets/images/talaoCertificateImage'
 import './App.css'
 

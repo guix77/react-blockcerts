@@ -11,7 +11,7 @@ import {
   withStyles
 } from '@material-ui/core'
 
-import blockcertsLogo from './data/blockcertsLogo'
+import blockcertsLogo from '../../assets/images/blockcertsLogo'
 
 const styles = {
   wrapper: {
