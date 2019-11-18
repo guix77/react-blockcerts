@@ -3,7 +3,6 @@
 }
 
 .App-header {
-  background-color: #222;
   min-height: 200px;
   padding: 20px;
   color: white;
@@ -11,10 +10,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-.App-title {
-  font-size: 2em;
 }
 
 .App-header ul {
@@ -40,18 +35,10 @@
   text-decoration: underline;
 }
 
-.App-section {
-  background-color: #fff;
-  padding-bottom: 2rem;
+.App-title {
+  font-size: 2em;
 }
 
-.App-section > header {
-  padding: 1rem;
-  margin-bottom: 2rem;
-}
-.App-section > header > h2 {
-  margin: 0;
-}
-.App-section > header > p {
-  margin: 0;
+.App-content {
+  padding-bottom: 2rem;
 }

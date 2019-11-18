@@ -16,14 +16,12 @@ const App = () => {
         </ul>
       </header>
       <div className='App-content'>
-        <article className='App-section'>
-          <Blockcerts
-            url='https://raw.githubusercontent.com/guix77/blockcerts-certificates/talao-0.0.1/certificates/ropsten/talao/duveau-blockcerts.json'
-            image={talaoCertificateImage}
-            color='#282828'
-            color_bg='#edecec'
-          />
-        </article>
+        <Blockcerts
+          url='https://raw.githubusercontent.com/guix77/blockcerts-certificates/talao-0.0.1/certificates/ropsten/talao/duveau-blockcerts.json'
+          image={talaoCertificateImage}
+          color='#282828'
+          color_bg='#edecec'
+        />
       </div>
     </div>
   )
