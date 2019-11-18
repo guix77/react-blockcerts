@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Blockcerts from '../../src/components/organisms/Blockcerts'
+import Blockcerts from '../../src/components/Blockcerts'
 import talaoCertificateImage from './assets/images/talaoCertificateImage'
 import './App.css'
 
@@ -17,10 +17,10 @@ const App = () => {
       </header>
       <div className='App-content'>
         <Blockcerts
-          url='https://raw.githubusercontent.com/guix77/blockcerts-certificates/talao-0.0.1/certificates/ropsten/talao/duveau-blockcerts.json'
+          src='https://raw.githubusercontent.com/guix77/blockcerts-certificates/talao-0.0.1/certificates/ropsten/talao/duveau-blockcerts.json'
           image={talaoCertificateImage}
           color='#282828'
-          color_bg='#edecec'
+          backgroundColor='#edecec'
         />
       </div>
     </div>

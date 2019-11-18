@@ -1,3 +1,3 @@
-import Blockcerts from './components/organisms/Blockcerts'
+import Blockcerts from './components/Blockcerts'
 
 module.exports = Blockcerts
