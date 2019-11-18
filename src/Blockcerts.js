@@ -287,7 +287,7 @@ class Blockcerts extends Component {
             <TabContainer>
               <div className={classes.verifierResult}>
                 {
-                  verifierExecuted &&
+                  verifierExecuted && (
                     <>
                       <Typography variant='headline' component='h3'>
                         {this.state.verifierResult === 'success' ? 'Valid certificate' : 'Invalid certificate'}
@@ -297,16 +297,17 @@ class Blockcerts extends Component {
                       </Typography>
 
                       <Button className={classes.verifierButton} variant='contained' color='primary' href={this.state.certificate.transactionLink}>
-                      See blockchain transaction
+                        See blockchain transaction
                       </Button>
                       <Button
                         className={classes.verifierButton}
                         variant='contained'
                         onClick={this.toggleDebug.bind(this)}
                       >
-                      Raw data
+                        Raw data
                       </Button>
                     </>
+                  )
                 }
               </div>
               {this.state.viewJson && (
