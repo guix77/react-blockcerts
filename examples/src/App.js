@@ -17,12 +17,8 @@ const App = () => {
       </header>
       <div className='App-content'>
         <article className='App-section'>
-          <header>
-            <h2>Signed certificate (Blockcerts component), BlockCerts v2.0, custom display, custom additional fields, valid, signed on Ethereum testnet, certificate provided as an URL prop to an online JSON</h2>
-            <p>https://raw.githubusercontent.com/guix77/blockcerts-certificates/master/ethereum/ropsten/certificates/talao/duveau-improve-talao-certificates.json</p>
-          </header>
           <Blockcerts
-            url='https://raw.githubusercontent.com/guix77/blockcerts-certificates/master/ethereum/ropsten/certificates/talao/duveau-improve-talao-certificates.json'
+            url='https://raw.githubusercontent.com/guix77/blockcerts-certificates/talao-0.0.1/certificates/ropsten/talao/duveau-blockcerts.json'
             image={talaoCertificateImage}
             color='#282828'
             color_bg='#edecec'

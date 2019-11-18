@@ -1,16 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Certificate, CertificateVerifier } from 'cert-verifier-js'
+import { Certificate } from 'cert-verifier-js'
 import Timestamp from 'react-timestamp'
 import ReactJson from 'react-json-view'
 import {
   Button,
-  Stepper,
-  Step,
-  StepLabel,
-  StepContent,
-  Tabs,
-  Tab,
+  Stepper, Step, StepLabel, StepIcon,
+  Tabs, Tab,
   Typography,
   withStyles
 } from '@material-ui/core'
@@ -75,59 +71,6 @@ TabContainer.propTypes = {
   children: PropTypes.node.isRequired
 }
 
-const verifierSteps = [
-  {
-    status: 'computingLocalHash',
-    name: 'Computing local hash',
-    description: 'Compute locally the hash of this certificate.'
-  },
-  {
-    status: 'fetchingRemoteHash',
-    name: 'Fetching remote hash',
-    description: 'Get the certificate hash stored in the blockchain transaction.'
-  },
-  {
-    status: 'parsingIssuerKeys',
-    name: 'Parsing issuer keys',
-    description: 'Get the issuer blockchain public keys (actual and revoked).'
-  },
-  {
-    status: 'comparingHashes',
-    name: 'Comparing hashes',
-    description: 'Compare the locally computed hash of this certificate VS the hash stored in the blockchain.'
-  },
-  {
-    status: 'checkingMerkleRoot',
-    name: 'Checking Merkle root',
-    description: 'Validate the Merkle proof stored inside of the certificate.'
-  },
-  {
-    status: 'checkingReceipt',
-    name: 'Checking receipt',
-    description: 'Compare the Merkle root value in the certificate with the value in the blockchain transaction.'
-  },
-  {
-    status: 'checkingRevokedStatus',
-    name: 'Checking revoked status',
-    description: 'Check that this certificate has not been revoked by the issuer.'
-  },
-  {
-    status: 'checkingAuthenticity',
-    name: 'Checking authenticity',
-    description: 'Check that the certificate was authored by the issuer.'
-  },
-  {
-    status: 'checkingExpiresDate',
-    name: 'Checking expires date',
-    description: 'Check that the certificate is not expired.'
-  },
-  {
-    status: 'success',
-    name: 'Valid certificate',
-    description: 'Success: this certificate is valid!'
-  }
-]
-
 class Blockcerts extends Component {
   constructor (props) {
     super(props)
@@ -135,6 +78,8 @@ class Blockcerts extends Component {
       tab: 0,
       certificateJson: null,
       certificate: null,
+      verificationStep: 0,
+      verificationSteps: [],
       verifierExecuted: false,
       verifierStep: 0,
       verifierFailureStep: null,
@@ -142,52 +87,39 @@ class Blockcerts extends Component {
       viewJson: false
     }
     this.handleTabChange = this.handleTabChange.bind(this)
-    this.handleVerifyCertificate = this.handleVerifyCertificate.bind(this)
-    this.verifierStepper = this.verifierStepper.bind(this)
-    this.handleVerifierNext = this.handleVerifierNext.bind(this)
-    this.handleVerifierBack = this.handleVerifierBack.bind(this)
   }
 
   handleTabChange (event, value) {
     this.setState({ tab: value })
   }
 
-  handleVerifyCertificate () {
-    const { certificateJson } = this.state
-    const verifier = new CertificateVerifier(
-      JSON.stringify(certificateJson),
-      this.verifierStepper
-    )
-    verifier.verify()
-      .then(
-        result => {
+  async handleVerifyCertificate () {
+    const { certificateJson, verificationSteps } = this.state
+    const certificate = new Certificate(certificateJson)
+    this.setState({
+      verificationStep: 0,
+      verificationSteps: []
+    })
+    try {
+      await certificate.verify(({ code, label, status, errorMessage }) => {
+        console.log({ code, label, status, errorMessage })
+        if (status !== 'starting') {
+          verificationSteps.push({ code, label, status, errorMessage })
+          const verificationStep = verificationSteps.length - 1
           this.setState({
-            verifierExecuted: true,
-            verifierResult: result
+            verificationStep,
+            verificationSteps
           })
         }
-      )
-      .catch(e => console.error(e))
-  }
-
-  verifierStepper (status) {
-    if (status !== 'failure') {
-      const step = Object.keys(verifierSteps).find(key => verifierSteps[key].status === status)
-      this.setState({ verifierStep: step })
-    } else {
-      this.setState({
-        verifierFailureStep: this.state.verifierStep,
-        verifierResult: 'failure'
       })
+    } catch (e) {
+      console.error(e)
     }
   }
 
-  handleVerifierNext () {
-    this.setState({ verifierStep: this.state.verifierStep + 1 })
-  }
-
-  handleVerifierBack () {
-    this.setState({ verifierStep: this.state.verifierStep - 1 })
+  isValid () {
+    const { verificationSteps } = this.state
+    return verificationSteps.every(step => step.status === 'success')
   }
 
   toggleDebug () {
@@ -212,14 +144,14 @@ class Blockcerts extends Component {
     } catch (error) {
       console.error(error)
     }
-    const certificate = Certificate.parseJson(this.state.certificateJson)
+    const certificate = new Certificate(this.state.certificateJson)
     this.setState({ certificate: certificate })
   }
 
   render () {
     if (this.state.certificateJson && this.state.certificate) {
       const { classes } = this.props
-      const { tab, verifierExecuted, verifierStep, verifierFailureStep } = this.state
+      const { tab, verifierExecuted, verificationStep, verificationSteps } = this.state
       return (
         <div className={classes.wrapper}>
           <div
@@ -239,7 +171,7 @@ class Blockcerts extends Component {
             >
               <Tab label='View' />
               <Tab
-                onClick={this.handleVerifyCertificate}
+                onClick={() => this.handleVerifyCertificate()}
                 label='Verify'
               />
             </Tabs>
@@ -322,42 +254,18 @@ class Blockcerts extends Component {
                 </div>
               )}
               <div className={classes.stepper}>
-                <Stepper
-                  activeStep={parseInt(verifierStep)}
-                  orientation='vertical'
-                >
-                  {verifierSteps.map((step, index) => {
-                    return (
-                      <Step key={index}>
-                        <StepLabel>{step.name}</StepLabel>
-                        <StepContent>
-                          <Typography>{step.description}</Typography>
-                          <div className={classes.stepButtons}>
-                            {verifierStep > 0 && (
-                              <Button
-                                size='small'
-                                color='secondary'
-                                className={classes.stepButton}
-                                onClick={this.handleVerifierBack}
-                              >
-                            Back
-                              </Button>
-                            )}
-                            {(verifierStep < verifierSteps.length - 1 && (!verifierFailureStep || verifierStep < verifierFailureStep)) && (
-                              <Button
-                                size='small'
-                                color='secondary'
-                                className={classes.stepButton}
-                                onClick={this.handleVerifierNext}
-                              >
-                            Next
-                              </Button>
-                            )}
-                          </div>
-                        </StepContent>
-                      </Step>
-                    )
-                  })}
+                <Stepper activeStep={verificationStep} orientation='vertical'>
+                  {
+                    verificationSteps.map((step, index) => {
+                      return (
+                        <Step key={index}>
+                          <StepLabel error={step.status === 'failure'}>
+                            {step.label}
+                          </StepLabel>
+                        </Step>
+                      )
+                    })
+                  }
                 </Stepper>
               </div>
             </TabContainer>
