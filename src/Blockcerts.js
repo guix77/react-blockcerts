@@ -251,7 +251,7 @@ class Blockcerts extends Component {
                 {!this.state.certificateJson.displayHtml && (
                   <div>
                     <img src={this.state.certificate.certificateImage} className={classes.image} />
-                    <Typography paragraph variant='headline' component='h1'>
+                    <Typography paragraph variant='h1' component='h1'>
                       {this.state.certificate.title}
                     </Typography>
                     <Typography paragraph variant='subheading' component='h2'>
@@ -289,7 +289,7 @@ class Blockcerts extends Component {
                 {
                   verifierExecuted && (
                     <>
-                      <Typography variant='headline' component='h3'>
+                      <Typography variant='h3' component='h3'>
                         {this.state.verifierResult === 'success' ? 'Valid certificate' : 'Invalid certificate'}
                       </Typography>
                       <Typography component='p'>

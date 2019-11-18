@@ -46,7 +46,7 @@ class BlockcertsPreview extends Component {
         {!this.props.json.displayHtml && (
           <div>
             <img src={this.props.json.badge.image} className={this.props.classes.image} />
-            <Typography paragraph variant='headline' component='h1'>
+            <Typography paragraph variant='h1' component='h1'>
               {this.props.json.title}
             </Typography>
             <Typography paragraph variant='subheading' component='h2'>
