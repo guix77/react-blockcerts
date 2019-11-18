@@ -1,30 +1,52 @@
 import React from 'react'
+import {
+  AppBar,
+  Button,
+  Grid,
+  Toolbar,
+  Typography,
+  withStyles
+} from '@material-ui/core'
 
 import Blockcerts from '../../src/components/Blockcerts'
 import talaoCertificateImage from './assets/images/talaoCertificateImage'
-import './App.css'
 
-const App = () => {
+const styles = {
+  title: {
+    flex: 1
+  }
+}
+
+const App = ({ classes }) => {
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <h1 className='App-title'>react-blockcerts example</h1>
-        <ul>
-          <li><a href='https://github.com/guix77/react-blockcerts'>GitHub</a></li>
-          <li><a href='https://www.blockcerts.org/' target='_blank' rel='noopener noreferrer'>BlockCerts.org</a></li>
-          <li>Sponsored by <a href='https://ico.talao.io/' target='_blank' rel='noopener noreferrer'>Talao.io</a></li>
-        </ul>
-      </header>
-      <div className='App-content'>
-        <Blockcerts
-          src='https://raw.githubusercontent.com/guix77/blockcerts-certificates/talao-0.0.1/certificates/ropsten/talao/duveau-blockcerts.json'
-          image={talaoCertificateImage}
-          color='#282828'
-          backgroundColor='#edecec'
-        />
-      </div>
-    </div>
+    <>
+      <AppBar position='sticky'>
+        <Toolbar>
+          <Typography variant='h6' classes={{ root: classes.title }}>
+            Examples for react-blockcerts
+          </Typography>
+          <Button
+            href='https://github.com/guix77/react-blockcerts'
+            target='_blank'
+            rel='noopener noreferrer'
+            color='inherit'
+          >
+            GitHub
+          </Button>
+        </Toolbar>
+      </AppBar>
+      <Grid container>
+        <Grid item xs={12}>
+          <Blockcerts
+            src='https://raw.githubusercontent.com/guix77/blockcerts-certificates/master/ethereum/ropsten/certificates/talao/duveau-improve-talao-certificates.json'
+            image={talaoCertificateImage}
+            color='#282828'
+            backgroundColor='#edecec'
+          />
+        </Grid>
+      </Grid>
+    </>
   )
 }
 
-export default App
+export default withStyles(styles)(App)

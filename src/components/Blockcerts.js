@@ -5,6 +5,7 @@ import Timestamp from 'react-timestamp'
 import {
   Button,
   CircularProgress,
+  Paper,
   Stepper, Step, StepLabel, StepContent,
   Tabs, Tab,
   Typography,
@@ -136,7 +137,7 @@ class Blockcerts extends Component {
     }
 
     return (
-      <div className={classes.wrapper}>
+      <Paper>
         <div
           className={classes.header}
           style={{
@@ -218,7 +219,11 @@ class Blockcerts extends Component {
                   </div>
                 )
               }
-              <Stepper activeStep={verificationStep} orientation='vertical'>
+              <Stepper
+                activeStep={verificationStep}
+                orientation='vertical'
+                classes={{ root: classes.stepper }}
+              >
                 {
                   verificationSteps.map((step, index) => {
                     return (
@@ -243,7 +248,7 @@ class Blockcerts extends Component {
             </div>
           )
         }
-      </div>
+      </Paper>
     )
   }
 }
