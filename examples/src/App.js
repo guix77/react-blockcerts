@@ -9,7 +9,6 @@ import {
 } from '@material-ui/core'
 
 import Blockcerts from '../../src/components/Blockcerts'
-import talaoCertificateImage from './assets/images/talaoCertificateImage'
 
 const styles = {
   title: {
@@ -23,7 +22,7 @@ const App = ({ classes }) => {
       <AppBar position='sticky'>
         <Toolbar>
           <Typography variant='h6' classes={{ root: classes.title }}>
-            Examples for react-blockcerts
+            React-blockcerts example
           </Typography>
           <Button
             href='https://github.com/guix77/react-blockcerts'
@@ -39,9 +38,6 @@ const App = ({ classes }) => {
         <Grid item xs={12}>
           <Blockcerts
             src='https://raw.githubusercontent.com/guix77/blockcerts-certificates/master/ethereum/ropsten/certificates/talao/duveau-improve-talao-certificates.json'
-            image={talaoCertificateImage}
-            color='#282828'
-            backgroundColor='#edecec'
           />
         </Grid>
       </Grid>
