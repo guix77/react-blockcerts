@@ -98,6 +98,7 @@ class Blockcerts extends Component {
   }
 
   async handleVerifyCertificate () {
+    console.log('verification')
     const { certificate, verificationSteps } = this.state
     try {
       const verificationResult = await certificate.verify(({ code, label, status, errorMessage }) => {
@@ -126,36 +127,36 @@ class Blockcerts extends Component {
   }
 
   async componentDidMount () {
-    let { src } = this.props
-    if (typeof src === 'string') {
-      try {
-        const response = await window.fetch(src)
-        src = await response.json()
-      } catch (e) {
-        this.setState({
-          error: e.message
-        })
+    if (!this.state.certificate) {
+      let { src } = this.props
+      if (typeof src === 'string') {
+        try {
+          const response = await window.fetch(src)
+          src = await response.json()
+        } catch (e) {
+          this.setState({
+            error: e.message
+          })
+        }
       }
-    }
-    if (typeof src === 'object') {
-      try {
-        const certificate = new Certificate(src)
+      if (typeof src === 'object') {
+        const certificate = await new Certificate(src)
         this.setState({
           src,
           certificate
         })
-        this.handleVerifyCertificate()
-      } catch (e) {
-        this.setState({
-          error: e.message
-        })
       }
+    }
+    if (this.state.certificate) {
+      console.log('there is a cert')
+      this.handleVerifyCertificate()
     }
   }
 
   render () {
     const { classes } = this.props
     const { src, error, certificate, verificationSteps, verificationStep, verificationResult, dialogOpen } = this.state
+    console.log(src, certificate)
 
     if (error) {
       return (
@@ -165,7 +166,7 @@ class Blockcerts extends Component {
       )
     }
 
-    if (!src) {
+    if (!src || !certificate) {
       return <CircularProgress />
     }
 
