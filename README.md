@@ -1,4 +1,4 @@
-# react-blockcerts
+# React Blockcerts
 
 ## Introduction
 
@@ -35,7 +35,7 @@ Then in your React app:
 
 ## Author
 
-Guillaume Duveau, blockchain and web developer (https://guillaumeduveau.com)
+Guillaume Duveau, blockchain and web developer. See my pages about [Blockcerts](https://guillaumeduveau.com/en/blockcerts)
 
 ## Sponsors
 
