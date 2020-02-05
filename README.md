@@ -45,7 +45,7 @@ Guillaume Duveau, blockchain and web developer. See my pages about [Blockcerts](
 
 Publish NPM package:
 
-    npm publish
+    yarn publish
 
 Publish demo:
 
