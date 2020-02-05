@@ -1,7 +1,3 @@
-import Blockcerts from './Blockcerts';
-import BlockcertsPreview from './BlockcertsPreview';
+import Blockcerts from './components/Blockcerts'
 
-module.exports = {
-  Blockcerts,
-  BlockcertsPreview
-}
+module.exports = Blockcerts

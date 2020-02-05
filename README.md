@@ -1,70 +1,47 @@
 # react-blockcerts
 
+## Introduction
+
+This component for React allows to view and verify certificates compliant with the Blockcerts standard.
+
+This is not the official Blockcerts.org viewer, but it implements the same verification process and uses some of its code ([cert-verifier-js](https://github.com/blockchain-certificates/cert-verifier-js)).
+
+For official information about Blockcerts, please check https://www.blockcerts.org/about.html
+
 ## Demo
 
-https://guix77.github.io/react-blockcerts/
+https://guix77.github.io/react-blockcerts
 
 ## How to use
 
     yarn add react-blockcerts
 
-or
+Then in your React app:
 
-    npm add react-blockcerts
+    import React from 'react'
+    import Blockcerts from 'react-blockcerts'
 
-### Blockcerts component for signed certificates
-
-    import React, { Component } from 'react';
-    import { Blockcerts } from 'react-blockcerts';
-    export defaut MyComponent extends Component {
-      render() {
-        return(
-          <Blockcerts
-            url="https://raw.githubusercontent.com/blockchain-certificates/cert-verifier-js/master/tests/data/sample-cert-mainnet-valid-2.0.json"
-          />
-        );
-      }
+    const App = () => {
+      return (
+        <Blockcerts
+          src="https://raw.githubusercontent.com/blockchain-certificates/cert-verifier-js/master/tests/data/sample-cert-mainnet-valid-2.0.json"
+        />
+      )
     }
 
-**Props**
+### Props
 
-Either an url, OR a json prop **must** be used.
+- src (string or object): url of the certificate JSON, or certificate JSON
 
-- url (string): url of the JSON of the signed certificate
-- json (object): the signed certificate as a JSON object
-- color (string): hex code for the header color text (facultative, fallbacks to white)
-- color_bg (string): hex code for the header background color (facultative, fallbacks to marine blue)
-- image (string): header image in base 64, like data:image/png;base64,... (facultative, fallbacks to BlockCerts logo)
+## Author
 
-### BlockcertsPreview component for unsigned certificates
+Guillaume Duveau, blockchain and web developer (https://guillaumeduveau.com)
 
-    import React, { Component } from 'react';
-    import { BlockcertsPreview } from 'react-blockcerts';
-    export defaut MyComponent extends Component {
-      render() {
-        return(
-          <BlockcertsPreview
-            json={}
-          />
-        );
-      }
-    }
+## Sponsors
 
-**Props**
-
-An url OR a json prop must be used.
-
-- json (object): the unsigned certificate as a JSON object
-- color_bg (string): hex code for the header background color (facultative, fallbacks to marine blue)
-- image (string): header image in base 64, like data:image/png;base64,... (facultative, fallbacks to BlockCerts logo)
++ [Talao](https://talao.io)
 
 ## Development
-
-*You do not need this if you are just using react-blockcerts.*
-
-Watch files and run a development server on http://localhost:3000/
-
-    yarn start
 
 Publish NPM package:
 
@@ -73,7 +50,3 @@ Publish NPM package:
 Publish demo:
 
     yarn publish-demo
-
-## Sponsors
-
-+ [Talao](https://talao.io)
