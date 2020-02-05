@@ -98,7 +98,6 @@ class Blockcerts extends Component {
   }
 
   async handleVerifyCertificate () {
-    console.log('verification')
     const { certificate, verificationSteps } = this.state
     try {
       const verificationResult = await certificate.verify(({ code, label, status, errorMessage }) => {
@@ -148,7 +147,6 @@ class Blockcerts extends Component {
       }
     }
     if (this.state.certificate) {
-      console.log('there is a cert')
       this.handleVerifyCertificate()
     }
   }
@@ -156,7 +154,6 @@ class Blockcerts extends Component {
   render () {
     const { classes } = this.props
     const { src, error, certificate, verificationSteps, verificationStep, verificationResult, dialogOpen } = this.state
-    console.log(src, certificate)
 
     if (error) {
       return (
