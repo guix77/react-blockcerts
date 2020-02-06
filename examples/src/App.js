@@ -33,7 +33,7 @@ const App = ({ classes }) => {
             GitHub
           </Button>
           <Button
-            href='https://guillaume.duveau.com/en/blockcerts'
+            href='https://guillaumeduveau.com/en/blockcerts'
             target='_blank'
             rel='noopener noreferrer'
             color='inherit'
