@@ -32,6 +32,14 @@ const App = ({ classes }) => {
           >
             GitHub
           </Button>
+          <Button
+            href='https://guillaume.duveau.com/en/blockcerts'
+            target='_blank'
+            rel='noopener noreferrer'
+            color='inherit'
+          >
+            Blockcerts developer
+          </Button>
         </Toolbar>
       </AppBar>
       <Grid container>
