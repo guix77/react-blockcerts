@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Certificate } from 'cert-verifier-js'
+import { Certificate } from '@blockcerts/cert-verifier-js'
 import Timestamp from 'react-timestamp'
 import {
   Button,
