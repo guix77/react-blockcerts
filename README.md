@@ -1,6 +1,6 @@
 # React Blockcerts
 
-**July 23, 2020: This project is not maintained for now, in favor of Auther, a complete Blockcerts v2 opensource solution https://github.com/AutherOrg**
+**July 23, 2020: This project is not maintained any more for now. There is the new Auther project, a complete Blockcerts v2 opensource solution https://github.com/AutherOrg**
 
 ## Introduction
 
