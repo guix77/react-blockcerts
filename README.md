@@ -1,5 +1,7 @@
 # React Blockcerts
 
+**July 23, 2020: This project is not maintained for now, in favor of Auther, a complete Blockcerts v2 opensource solution https://github.com/AutherOrg**
+
 ## Introduction
 
 This component for React allows to view and verify certificates compliant with the Blockcerts standard.
